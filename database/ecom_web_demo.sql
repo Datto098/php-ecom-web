@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost
--- Thời gian đã tạo: Th10 16, 2023 lúc 03:11 PM
+-- Thời gian đã tạo: Th10 19, 2023 lúc 04:25 AM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.1.17
 
@@ -184,7 +184,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `product_img`, `product_desc`, `product_brand`, `product_name`, `product_price`, `category_id`) VALUES
-(16, '3dd38dc22de76b4bb376ce28cfd0fcfa.jpg', 'Sang trọng, thời thượng qua mẫu sơ mi lụa được Quý cô yêu thích từ nhà IVY moda. \r\n\r\nÁo cổ thuyền, dáng thường, thiết kế vai chờm độc đáo cùng điểm nhấn rút vai mới lạ. Để từ đó tạo bên tay lệch bắt mắt. \r\n\r\nCùng với đó, thiết kế lựa chọn chất liệu lụa mềm mại, mang đến cảm giác mặc nhẹ nhàng và vô cùng thoải mái. ', 'Ivymoda', 'ÁO LỤA CỔ THUYỀN', 890000, 43);
+(17, '26a096a6a1cd164effeb6e7bcbe9e93f.jpg', 'Áo sơ mi croptop trẻ trung, năng động, thích hợp với nàng yêu thích sự cá tính.\r\n\r\nThiết kế áo dáng croptop với cổ đức cùng tay dài. \r\n\r\nÁo được tạo kiểu 2 lớp: 1 lớp cổ V bên trong và  1 lớp áo giả khoác bên ngoài. \r\n\r\nNàng có thể lựa chọn mix áo cùng chân váy, quần dài, quần short đều rất phù hợp. ', 'Ivymoda', 'ÁO SƠ MI CROPTOP', 1290000, 43),
+(18, '3dd38dc22de76b4bb376ce28cfd0fcfa.jpg', 'Sang trọng, thời thượng qua mẫu sơ mi lụa được Quý cô yêu thích từ nhà IVY moda. \r\n\r\nÁo cổ thuyền, dáng thường, thiết kế vai chờm độc đáo cùng điểm nhấn rút vai mới lạ. Để từ đó tạo bên tay lệch bắt mắt. \r\n\r\nCùng với đó, thiết kế lựa chọn chất liệu lụa mềm mại, mang đến cảm giác mặc nhẹ nhàng và vô cùng thoải mái. ', 'Ivymoda', 'ÁO LỤA CỔ THUYỀN', 890000, 43);
 
 -- --------------------------------------------------------
 
@@ -205,7 +206,8 @@ CREATE TABLE `product_details` (
 --
 
 INSERT INTO `product_details` (`detail_id`, `product_id`, `product_color`, `product_size`, `product_quantity`) VALUES
-(24, 16, 'Vàng mustard', 'L', 100);
+(25, 17, 'Trắng', 'M', 10),
+(26, 18, 'Vàng mustard', 'L', 10);
 
 -- --------------------------------------------------------
 
@@ -224,13 +226,20 @@ CREATE TABLE `product_images` (
 --
 
 INSERT INTO `product_images` (`image_id`, `href_value`, `product_id`) VALUES
-(34, 'b159e2a61c6bd8423c5fa7c29225f2fe.jpg', 16),
-(35, 'af19db1a796fce1cfa55ec52d0a139e0.jpg', 16),
-(36, 'a6528be04d16a3ee954d2ddeaf03d744.jpg', 16),
-(37, '99e07a9b3279837295b83734591233ac.jpg', 16),
-(38, '51f813755233b002d8f4464b12771e32.jpg', 16),
-(39, '45dcd6239d55b0c3663a39422d77a611.jpg', 16),
-(40, '3dd38dc22de76b4bb376ce28cfd0fcfa.jpg', 16);
+(41, 'e2119c7d41f71513c83fc049fd360b02.jpg', 25),
+(42, 'e36f097765ca983eb9f0fef09930da51.jpg', 25),
+(43, 'd975e60753276755830ce5148b88a0bb.jpg', 25),
+(44, 'a08f06469ed908602a057220f6276a39.jpg', 25),
+(45, 'a7d33fe2ae98dc3ae820ad95d9667f31.jpg', 25),
+(46, '1049df0db495cbe33af760db03218831.jpg', 25),
+(47, '26a096a6a1cd164effeb6e7bcbe9e93f.jpg', 25),
+(48, '3dd38dc22de76b4bb376ce28cfd0fcfa (1).jpg', 26),
+(49, '45dcd6239d55b0c3663a39422d77a611.jpg', 26),
+(50, 'b159e2a61c6bd8423c5fa7c29225f2fe.jpg', 26),
+(51, 'a6528be04d16a3ee954d2ddeaf03d744.jpg', 26),
+(52, '99e07a9b3279837295b83734591233ac.jpg', 26),
+(53, 'af19db1a796fce1cfa55ec52d0a139e0.jpg', 26),
+(54, '51f813755233b002d8f4464b12771e32.jpg', 26);
 
 -- --------------------------------------------------------
 
@@ -390,19 +399,19 @@ ALTER TABLE `order_details`
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT cho bảng `product_details`
 --
 ALTER TABLE `product_details`
-  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT cho bảng `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT cho bảng `rates`
@@ -457,12 +466,6 @@ ALTER TABLE `order_details`
 --
 ALTER TABLE `product_details`
   ADD CONSTRAINT `product_detail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
-
---
--- Các ràng buộc cho bảng `product_images`
---
-ALTER TABLE `product_images`
-  ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
 --
 -- Các ràng buộc cho bảng `shipping_addresses`

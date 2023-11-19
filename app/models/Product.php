@@ -34,8 +34,12 @@ class Product extends Database
                 "product_id" => $productId
             ));
 
+            $producDetailstStmt = parent::$connection->prepare("SELECT * FROM product_details ORDER BY detail_id DESC LIMIT 1");
+            $productDetail = parent::select($producDetailstStmt);
+            $detailId =  $productDetail[0]['detail_id'];
+
             if ($createProductDetailResult) {
-                return $productId;
+                return $detailId;
             } else {
                 return $createProductDetailResult;
             }
@@ -89,22 +93,24 @@ class Product extends Database
 
         foreach ($products as $key => $product) {
             if ($product) {
-                $imageStmt = parent::$connection->prepare("SELECT * FROM product_images WHERE product_id = ?");
-                $imageStmt->bind_param("i", $product["product_id"]);
-
                 $rateStmt = parent::$connection->prepare("SELECT * FROM rates WHERE product_id = ?");
                 $rateStmt->bind_param("i", $product["product_id"]);
 
                 $detailStmt = parent::$connection->prepare("SELECT * FROM product_details WHERE product_id = ?");
                 $detailStmt->bind_param("i", $product["product_id"]);
 
-                $images = parent::select($imageStmt);
                 $rates = parent::select($rateStmt);
                 $details = parent::select($detailStmt);
 
-                $products[$key]["product_images"] = $images;
+                foreach ($details as $index => $detail) {
+                    $imageStmt = parent::$connection->prepare("SELECT * FROM product_images WHERE product_id = ?");
+                    $imageStmt->bind_param("i", $detail["detail_id"]);
+                    $images = parent::select($imageStmt);
+                    $products[$key]["details"] = $detail;
+                    $products[$key]["details"]["product_detail_image"] = $images;
+                }
+
                 $products[$key]["rates"] = $rates;
-                $products[$key]["details"] = $details;
             }
         }
         return $products;
