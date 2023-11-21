@@ -76,13 +76,67 @@ class Product extends Database
             $rates = parent::select($rateStmt);
             $details = parent::select($detailStmt);
 
-
-
             $product[0]["product_images"] = $images;
             $product[0]["rates"] = $rates;
             $product[0]["details"] = $details;
         }
         return $product[0];
+    }
+
+    public static function getProductByCategoryId($categoryId)
+    {
+        $productStmt = parent::$connection->prepare("SELECT * FROM products WHERE category_id = ?");
+        $productStmt->bind_param("i", $categoryId);
+        $products = parent::select($productStmt);
+
+        if ($products) {
+            foreach ($products as $key => $product) {
+                if ($product) {
+
+                    $rates = self::getProductRate($product["product_id"]);
+                    $details = self::getProductDetail($product["product_id"]);
+
+                    foreach ($details as $index => $detail) {
+                        $imageStmt = parent::$connection->prepare("SELECT * FROM product_images WHERE product_id = ?");
+                        $imageStmt->bind_param("i", $detail["detail_id"]);
+                        $images = parent::select($imageStmt);
+                        $products[$key]["details"] = $detail;
+                        $products[$key]["details"]["product_detail_image"] = $images;
+                    }
+
+                    $products[$key]["rates"] = $rates[0];
+                }
+            }
+            return $products;
+        }
+    }
+
+    public static function getProductByMainCategoryId($categoryId)
+    {
+        $categoryStmt = parent::$connection->prepare("SELECT * FROM products WHERE category_id IN (SELECT category_id FROM categories WHERE parent_id IN (SELECT category_id FROM categories WHERE parent_id = ?))");
+        $categoryStmt->bind_param("i", $categoryId);
+        $products =  parent::select($categoryStmt);
+
+        if ($products) {
+            foreach ($products as $key => $product) {
+                if ($product) {
+
+                    $rates = self::getProductRate($product["product_id"]);
+                    $details = self::getProductDetail($product["product_id"]);
+
+                    foreach ($details as $index => $detail) {
+                        $imageStmt = parent::$connection->prepare("SELECT * FROM product_images WHERE product_id = ?");
+                        $imageStmt->bind_param("i", $detail["detail_id"]);
+                        $images = parent::select($imageStmt);
+                        $products[$key]["details"] = $detail;
+                        $products[$key]["details"]["product_detail_image"] = $images;
+                    }
+
+                    $products[$key]["rates"] = $rates[0];
+                }
+            }
+            return $products;
+        }
     }
 
 
@@ -93,14 +147,9 @@ class Product extends Database
 
         foreach ($products as $key => $product) {
             if ($product) {
-                $rateStmt = parent::$connection->prepare("SELECT * FROM rates WHERE product_id = ?");
-                $rateStmt->bind_param("i", $product["product_id"]);
 
-                $detailStmt = parent::$connection->prepare("SELECT * FROM product_details WHERE product_id = ?");
-                $detailStmt->bind_param("i", $product["product_id"]);
-
-                $rates = parent::select($rateStmt);
-                $details = parent::select($detailStmt);
+                $rates = self::getProductRate($product["product_id"]);
+                $details = self::getProductDetail($product["product_id"]);
 
                 foreach ($details as $index => $detail) {
                     $imageStmt = parent::$connection->prepare("SELECT * FROM product_images WHERE product_id = ?");
@@ -110,12 +159,18 @@ class Product extends Database
                     $products[$key]["details"]["product_detail_image"] = $images;
                 }
 
-                $products[$key]["rates"] = $rates;
+                $products[$key]["rates"] = $rates[0];
             }
         }
         return $products;
     }
 
+    public static function getProductDetail($productId)
+    {
+        $detailStmt = parent::$connection->prepare("SELECT * FROM product_details WHERE product_id = ?");
+        $detailStmt->bind_param("i", $productId);
+        return parent::select($detailStmt);
+    }
 
     public static function addRate($productId, $rateValue)
     {
@@ -125,7 +180,6 @@ class Product extends Database
         ));
     }
 
-
     public static function addProductDetail($productId, $productColor, $productSize, $productQuantity)
     {
         return parent::insert("product_details", array(
@@ -134,5 +188,18 @@ class Product extends Database
             "product_size" => $productSize,
             "product_quantity" => $productQuantity,
         ));
+    }
+
+    public static function getProductRate($productId)
+    {
+        $rateStmt = parent::$connection->prepare("SELECT AVG(rate_value) AS average_rate FROM rates WHERE product_id = ?");
+        $rateStmt->bind_param("i", $productId);
+        return parent::select($rateStmt);
+    }
+
+    public static function getAllProductBrands()
+    {
+        $brandStmt = parent::$connection->prepare("SELECT product_brand as brand_name FROM products GROUP BY product_brand");
+        return parent::select($brandStmt);
     }
 }

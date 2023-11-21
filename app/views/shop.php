@@ -1,110 +1,3 @@
-<!-- Page Preloder -->
-<div id="preloder">
-    <div class="loader"></div>
-</div>
-
-<!-- Offcanvas Menu Begin -->
-<div class="offcanvas-menu-overlay"></div>
-<div class="offcanvas-menu-wrapper">
-    <div class="offcanvas__option">
-        <div class="offcanvas__links">
-            <a href="#">Sign in</a>
-            <a href="#">Sign up</a>
-            <a href="#">Sign out</a>
-        </div>
-        <div class="offcanvas__top__hover">
-            <span>Usd <i class="arrow_carrot-down"></i></span>
-            <ul>
-                <li>USD</li>
-                <li>EUR</li>
-                <li>USD</li>
-            </ul>
-        </div>
-    </div>
-    <div class="offcanvas__nav__option">
-        <a href="#" class="search-switch"><img src="img/icon/search.png" alt="" /></a>
-        <a href="#"><img src="img/icon/heart.png" alt="" /></a>
-        <a href="#"><img src="img/icon/cart.png" alt="" /> <span>0</span></a>
-        <div class="price">$0.00</div>
-    </div>
-    <div id="mobile-menu-wrap"></div>
-    <div class="offcanvas__text">
-        <p>Free shipping, 30-day return or refund guarantee.</p>
-    </div>
-</div>
-<!-- Offcanvas Menu End -->
-
-<!-- Header Section Begin -->
-<header class="header">
-    <div class="header__top">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-4">
-                    <div class="header__top__left">
-                        <p>Free shipping, 30-day return or refund guarantee.</p>
-                    </div>
-                </div>
-                <div class="col-lg-8 col-md-8">
-                    <div class="header__top__right">
-                        <div class="header__top__links">
-                            <a href="login.php">Sign in</a>
-                            <a href="register.php">Sign up</a>
-                            <a href="index.php">Sign out</a>
-                        </div>
-                        <div class="header__top__hover">
-                            <span>Usd <i class="arrow_carrot-down"></i></span>
-                            <ul>
-                                <li>USD</li>
-                                <li>EUR</li>
-                                <li>USD</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-3">
-                <div class="header__logo">
-                    <a href="./index.php"><img src="img/logo.png" alt="" /></a>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-                <nav class="header__menu mobile-menu">
-                    <ul>
-                        <li class="active"><a href="./index.php">Home</a></li>
-                        <li><a href="./shop.php">Shop</a></li>
-                        <li>
-                            <a href="#">Pages</a>
-                            <ul class="dropdown">
-                                <li><a href="./about.php">About Us</a></li>
-                                <li><a href="./shop-details.php">Shop Details</a></li>
-                                <li><a href="./shopping-cart.php">Shopping Cart</a></li>
-                                <li><a href="./checkout.php">Check Out</a></li>
-                                <li><a href="./blog-details.php">Blog Details</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="./blog.php">Blog</a></li>
-                        <li><a href="./contact.php">Contacts</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <div class="header__nav__option">
-                    <a href="#" class="search-switch"><img src="img/icon/search.png" alt="" /></a>
-                    <a href="#"><img src="img/icon/heart.png" alt="" /></a>
-                    <a href="#"><img src="img/icon/cart.png" alt="" /> <span>0</span></a>
-                    <div class="price">$0.00</div>
-                </div>
-            </div>
-        </div>
-        <div class="canvas__open"><i class="fa fa-bars"></i></div>
-    </div>
-</header>
-<!-- Header Section End -->
-
 <!-- Breadcrumb Section Begin -->
 <section class="breadcrumb-option">
     <div class="container">
@@ -147,15 +40,14 @@
                                     <div class="card-body">
                                         <div class="shop__sidebar__categories">
                                             <ul class="nice-scroll">
-                                                <li><a href="#">Men (20)</a></li>
-                                                <li><a href="#">Women (20)</a></li>
-                                                <li><a href="#">Bags (20)</a></li>
-                                                <li><a href="#">Clothing (20)</a></li>
-                                                <li><a href="#">Shoes (20)</a></li>
-                                                <li><a href="#">Accessories (20)</a></li>
-                                                <li><a href="#">Kids (20)</a></li>
-                                                <li><a href="#">Kids (20)</a></li>
-                                                <li><a href="#">Kids (20)</a></li>
+                                                <?php
+                                                if (isset($category_parent_data)) {
+                                                    foreach ($category_parent_data as $key => $category_parent) { ?>
+                                                        <li><a href="#"><?= $category_parent["category_name"] . " ($category_parent[amount_product])" ?></a></li>
+                                                <?php
+                                                    }
+                                                }
+                                                ?>
                                             </ul>
                                         </div>
                                     </div>
@@ -169,10 +61,14 @@
                                     <div class="card-body">
                                         <div class="shop__sidebar__brand">
                                             <ul>
-                                                <li><a href="#">Louis Vuitton</a></li>
-                                                <li><a href="#">Chanel</a></li>
-                                                <li><a href="#">Hermes</a></li>
-                                                <li><a href="#">Gucci</a></li>
+                                                <?php
+                                                if (isset($brand_data)) {
+                                                    foreach ($brand_data as $key => $brand) { ?>
+                                                        <li><a href="#"><?= $brand["brand_name"] ?></a></li>
+                                                <?php
+                                                    }
+                                                }
+                                                ?>
                                             </ul>
                                         </div>
                                     </div>
@@ -186,12 +82,10 @@
                                     <div class="card-body">
                                         <div class="shop__sidebar__price">
                                             <ul>
-                                                <li><a href="#">$0.00 - $50.00</a></li>
-                                                <li><a href="#">$50.00 - $100.00</a></li>
-                                                <li><a href="#">$100.00 - $150.00</a></li>
-                                                <li><a href="#">$150.00 - $200.00</a></li>
-                                                <li><a href="#">$200.00 - $250.00</a></li>
-                                                <li><a href="#">250.00+</a></li>
+                                                <li><a href="#">100.000đ - 250.000đ</a></li>
+                                                <li><a href="#">250.000đ - 500.000đ</a></li>
+                                                <li><a href="#">500.000đ - 1.000.000đ</a></li>
+                                                <li><a href="#">1.000.000đ +</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -297,7 +191,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="shop__product__option__left">
-                                <p>Showing 1–12 of 126 results</p>
+                                <p>Showing 1-12 of 126 results</p>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
@@ -337,14 +231,36 @@
                                     <div class="product__item__text">
                                         <h6><?= $product['product_name'] ?></h6>
                                         <a href="#" class="add-cart">+ Add To Cart</a>
-                                        <div class="rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <h5><?= $product['product_price'] . "đ" ?></h5>
+
+                                        <?php
+                                        $averageRate = $product["rates"]["average_rate"];
+
+                                        if ($averageRate != null) {
+                                            // Chuyển đổi giá trị trung bình thành số sao
+                                            $numStars = round($averageRate);
+
+
+                                            // Tạo chuỗi HTML dựa trên số sao
+                                            $htmlStars = '<div class="rating">';
+                                            for ($i = 1; $i <= 5; $i++) {
+                                                if ($i <= $numStars) {
+                                                    $htmlStars .= '<i class="fa fa-star"></i>';
+                                                } else {
+                                                    $htmlStars .= '<i class="fa fa-star-o"></i>';
+                                                }
+                                            }
+                                        } else {
+                                            $htmlStars = '<div class="rating">';
+                                            for ($i = 1; $i <= 5; $i++) {
+                                                $htmlStars .= '<i class="fa fa-star-o"></i>';
+                                            }
+                                        }
+
+                                        $htmlStars .= '</div>';
+                                        // In chuỗi HTML
+                                        echo $htmlStars;
+                                        ?>
+                                        <h5><?= number_format($product['product_price'], 0, ',', '.') . "đ" ?></h5>
                                         <div class="product__color__select">
                                             <label for="pc-7">
                                                 <input type="radio" id="pc-7" />
@@ -382,91 +298,3 @@
     </div>
 </section>
 <!-- Shop Section End -->
-
-<!-- Footer Section Begin -->
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="footer__about">
-                    <div class="footer__logo">
-                        <a href="#"><img src="img/footer-logo.png" alt="" /></a>
-                    </div>
-                    <p>
-                        The customer is at the heart of our unique business model, which
-                        includes design.
-                    </p>
-                    <a href="#"><img src="img/payment.png" alt="" /></a>
-                </div>
-            </div>
-            <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
-                <div class="footer__widget">
-                    <h6>Shopping</h6>
-                    <ul>
-                        <li><a href="#">Clothing Store</a></li>
-                        <li><a href="#">Trending Shoes</a></li>
-                        <li><a href="#">Accessories</a></li>
-                        <li><a href="#">Sale</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-6">
-                <div class="footer__widget">
-                    <h6>Shopping</h6>
-                    <ul>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Payment Methods</a></li>
-                        <li><a href="#">Delivary</a></li>
-                        <li><a href="#">Return & Exchanges</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
-                <div class="footer__widget">
-                    <h6>NewLetter</h6>
-                    <div class="footer__newslatter">
-                        <p>
-                            Be the first to know about new arrivals, look books, sales &
-                            promos!
-                        </p>
-                        <form action="#">
-                            <input type="text" placeholder="Your email" />
-                            <button type="submit">
-                                <span class="icon_mail_alt"></span>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="footer__copyright__text">
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    <p>
-                        Copyright ©
-                        <script>
-                            document.write(new Date().getFullYear());
-                        </script>
-                        2020 All rights reserved | This template is made with
-                        <i class="fa fa-heart-o" aria-hidden="true"></i> by
-                        <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                    </p>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- Footer Section End -->
-
-<!-- Search Begin -->
-<div class="search-model">
-    <div class="h-100 d-flex align-items-center justify-content-center">
-        <div class="search-close-switch">+</div>
-        <form class="search-model-form">
-            <input type="text" id="search-input" placeholder="Search here....." />
-        </form>
-    </div>
-</div>
-<!-- Search End -->

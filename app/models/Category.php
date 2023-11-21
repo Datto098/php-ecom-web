@@ -43,6 +43,21 @@ class Category extends Database
         return $result;
     }
 
+    public static function getParentCategoryId()
+    {
+        $categoryStmt = parent::$connection->prepare("SELECT category_name ,category_id FROM categories WHERE parent_id IS NULL");
+        return parent::select($categoryStmt);
+    }
+
+
+
+    public static function getAmountProductInCategory($categoryId)
+    {
+        $categoryStmt = parent::$connection->prepare("SELECT COUNT(*) as amount_product FROM products WHERE category_id IN (SELECT category_id FROM categories WHERE parent_id IN (SELECT category_id FROM categories WHERE parent_id = ?))");
+        $categoryStmt->bind_param("i", $categoryId);
+        return parent::select($categoryStmt);
+    }
+
 
     public static function deleteCategoryById($categoryId)
     {
