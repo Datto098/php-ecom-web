@@ -1,5 +1,7 @@
 <?php
 require_once "./config/database.php";
+require_once "./config/baseurl.php";
+
 
 // Autoload 
 spl_autoload_register(function ($class) {
@@ -10,6 +12,7 @@ $conn = new Database();
 $category = new Category();
 $category_data = $category->getAllCategories();
 $template = new Template();
+
 
 $data = [
   'title' => 'Login',
