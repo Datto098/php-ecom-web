@@ -14,7 +14,7 @@ $template = new Template();
 
 $data = [
   'title' => 'Shopping Cart',
-  'slot' => $template->render('shopping_cart', ['category_data' => $category_data]),
+  'slot' => $template->render('blocks/shopping_cart', ['category_data' => $category_data]),
 ];
 
 $template->view('layout', $data);
