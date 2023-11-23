@@ -20,7 +20,7 @@ $template = new Template();
 
 $data = [
   'title' => 'Trang chủ',
-  'slot' => $template->render('home', ['category_data' => $category_data]),
+  'slot' => $template->render('blocks/home', ['category_data' => $category_data]),
 ];
 
 $template->view('layout', $data);

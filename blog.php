@@ -14,7 +14,7 @@ $template = new Template();
 
 $data = [
   'title' => 'Blog',
-  'slot' => $template->render('blog', ['category_data' => $category_data]),
+  'slot' => $template->render('blocks/blog', ['category_data' => $category_data]),
 ];
 
 $template->view('layout', $data);
