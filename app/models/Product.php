@@ -202,4 +202,38 @@ class Product extends Database
         $brandStmt = parent::$connection->prepare("SELECT product_brand as brand_name FROM products GROUP BY product_brand");
         return parent::select($brandStmt);
     }
+
+    public static function getProductByPriceRange($minPrice, $maxPrice, $categoryId = null)
+    {
+        $products = array();
+        if ($categoryId != null) {
+            $productStmt = parent::$connection->prepare("SELECT * FROM products WHERE product_price >=? AND product_price <=? AND category_id = ?");
+            $productStmt->bind_param("iii", $minPrice, $maxPrice, $categoryId);
+            $products = parent::select($productStmt);
+        } else {
+            $productStmt = parent::$connection->prepare("SELECT * FROM products WHERE product_price >=? AND product_price <=?");
+            $productStmt->bind_param("ii", $minPrice, $maxPrice);
+            $products = parent::select($productStmt);
+        }
+
+        foreach ($products as $key => $product) {
+            if ($product) {
+
+                $rates = self::getProductRate($product["product_id"]);
+                $details = self::getProductDetail($product["product_id"]);
+
+                foreach ($details as $index => $detail) {
+                    $imageStmt = parent::$connection->prepare("SELECT * FROM product_images WHERE product_id = ?");
+                    $imageStmt->bind_param("i", $detail["detail_id"]);
+                    $images = parent::select($imageStmt);
+                    $products[$key]["details"] = $detail;
+                    $products[$key]["details"]["product_detail_image"] = $images;
+                }
+
+                $products[$key]["rates"] = $rates[0];
+            }
+        }
+
+        return $products;
+    }
 }
