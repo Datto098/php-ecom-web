@@ -82,6 +82,10 @@
                                     <div class="card-body">
                                         <div class="shop__sidebar__price">
                                             <ul>
+                                                <li><a href="#">100.000đ - 250.000đ</a></li>
+                                                <li><a href="#">250.000đ - 500.000đ</a></li>
+                                                <li><a href="#">500.000đ - 1.000.000đ</a></li>
+                                                <li><a href="#">1.000.000đ +</a></li>
                                                 <li><a href="#" class="link_filter_by_price" onclick="addPriceRange(100000, 250000)">100.000đ - 250.000đ</a></li>
                                                 <li><a href="#" class="link_filter_by_price" onclick="addPriceRange(250000, 500000)">250.000đ - 500.000đ</a></li>
                                                 <li><a href="#" class="link_filter_by_price" onclick="addPriceRange(500000, 1000000)">500.000đ - 1.000.000đ</a></li>

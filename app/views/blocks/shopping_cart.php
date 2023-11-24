@@ -149,4 +149,3 @@
         </div>
     </div>
 </section>
-<!-- Shopping Cart Section End -->
