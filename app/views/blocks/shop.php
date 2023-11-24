@@ -82,10 +82,10 @@
                                     <div class="card-body">
                                         <div class="shop__sidebar__price">
                                             <ul>
-                                                <li><a href="#">100.000đ - 250.000đ</a></li>
-                                                <li><a href="#">250.000đ - 500.000đ</a></li>
-                                                <li><a href="#">500.000đ - 1.000.000đ</a></li>
-                                                <li><a href="#">1.000.000đ +</a></li>
+                                                <li><a href="#" class="link_filter_by_price" onclick="addPriceRange(100000, 250000)">100.000đ - 250.000đ</a></li>
+                                                <li><a href="#" class="link_filter_by_price" onclick="addPriceRange(250000, 500000)">250.000đ - 500.000đ</a></li>
+                                                <li><a href="#" class="link_filter_by_price" onclick="addPriceRange(500000, 1000000)">500.000đ - 1.000.000đ</a></li>
+                                                <li><a href="#" class="link_filter_by_price" onclick="addPriceRange(1000000, 250000000)">1.000.000đ +</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -298,3 +298,20 @@
     </div>
 </section>
 <!-- Shop Section End -->
+
+<!-- script -->
+<script>
+    function addPriceRange(minPrice, maxPrice) {
+        // Lấy đường dẫn hiện tại
+        var currentUrl = window.location.href;
+
+        // Tạo một đối tượng URL từ đường dẫn hiện tại
+        var url = new URL(currentUrl);
+
+        url.searchParams.set('min_price', minPrice);
+        url.searchParams.set('max_price', maxPrice);
+
+        // Chuyển hướng trình duyệt đến đường dẫn mới với các tham số đã thêm
+        window.location.href = url.toString();
+    }
+</script>

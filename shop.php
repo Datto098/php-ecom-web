@@ -35,13 +35,20 @@ $brand_data = $product->getAllProductBrands();
 // Get product by category
 if (isset($category_id)) {
   $product_data = $product->getProductByCategoryId($category_id);
+  // Filter product by range price
+  if (isset($min_price) && isset($max_price)) {
+    $product_data = $product->getProductByPriceRange($min_price, $max_price, $category_id);
+  }
 }
 
 // Get product by category
 if (isset($main_category_id)) {
   $product_data = $product->getProductByMainCategoryId($main_category_id);
+  // Filter product by range price
+  if (isset($min_price) && isset($max_price)) {
+    $product_data = $product->getProductByPriceRange($min_price, $max_price);
+  }
 }
-
 
 $data = [
   'title' => 'Shop',
