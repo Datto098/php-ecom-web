@@ -1,5 +1,6 @@
 <?php
 require_once "./config/database.php";
+require_once "./config/baseurl.php";
 
 // Autoload 
 spl_autoload_register(function ($class) {
@@ -13,7 +14,7 @@ $template = new Template();
 
 $data = [
   'title' => 'Blog Details',
-  'slot' => $template->render('blog_details', ['category_data' => $category_data]),
+  'slot' => $template->render('blocks/blog_details', ['category_data' => $category_data]),
 ];
 
 $template->view('layout', $data);

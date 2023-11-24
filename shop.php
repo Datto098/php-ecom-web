@@ -35,17 +35,24 @@ $brand_data = $product->getAllProductBrands();
 // Get product by category
 if (isset($category_id)) {
   $product_data = $product->getProductByCategoryId($category_id);
+  // Filter product by range price
+  if (isset($min_price) && isset($max_price)) {
+    $product_data = $product->getProductByPriceRange($min_price, $max_price, $category_id);
+  }
 }
 
 // Get product by category
 if (isset($main_category_id)) {
   $product_data = $product->getProductByMainCategoryId($main_category_id);
+  // Filter product by range price
+  if (isset($min_price) && isset($max_price)) {
+    $product_data = $product->getProductByPriceRange($min_price, $max_price);
+  }
 }
-
 
 $data = [
   'title' => 'Shop',
-  'slot' => $template->render('shop', ['category_data' => $category_data, 'product_data' => $product_data, "category_parent_data" => $category_parent, "brand_data" => $brand_data]),
+  'slot' => $template->render('blocks/shop', ['category_data' => $category_data, 'product_data' => $product_data, "category_parent_data" => $category_parent, "brand_data" => $brand_data]),
 ];
 
 $template->view('layout', $data);
