@@ -12,9 +12,8 @@ class Template
     {
         // Bật buffering
         ob_start();
-
         extract($data);
-        include BASE_URL . 'app/views/' . $view . '.php';
+        include BASE_URL . 'app/views/blocks/' . $view . '.php';
 
         // Chuyển thông tin đọc được thành dạng chuỗi
         return ob_get_clean();
