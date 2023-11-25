@@ -23,15 +23,15 @@ class Product extends Database
         ));
 
         if ($createProductResult) {
-            $productStmt = parent::$connection->prepare("SELECT * FROM products ORDER BY product_id DESC LIMIT 1");
+            $productStmt = parent::$connection->prepare("SELECT * FROM products ORDER BY id DESC LIMIT 1");
             $product = parent::select($productStmt);
-            $productId =  $product[0]['product_id'];
+            $productId =  $product[0]['id'];
 
             $createProductDetailResult = parent::insert("product_details", array(
                 "product_color" => $product_color,
                 "product_size" => $product_size,
                 "product_quantity" => $product_quantity,
-                "product_id" => $productId
+                "id" => $productId
             ));
 
             $producDetailstStmt = parent::$connection->prepare("SELECT * FROM product_details ORDER BY detail_id DESC LIMIT 1");
@@ -51,14 +51,14 @@ class Product extends Database
     public static function addProductImage($productId, $hrefValue)
     {
         parent::insert("product_images", array(
-            "product_id" => $productId,
+            "id" => $productId,
             "href_value" => $hrefValue
         ));
     }
 
     public static function getProductById($productId)
     {
-        $productStmt = parent::$connection->prepare("SELECT * FROM products WHERE product_id = ?");
+        $productStmt = parent::$connection->prepare("SELECT * FROM products WHERE id = ?");
         $productStmt->bind_param("i", $productId);
         $product = parent::select($productStmt);
 
@@ -93,8 +93,8 @@ class Product extends Database
             foreach ($products as $key => $product) {
                 if ($product) {
 
-                    $rates = self::getProductRate($product["product_id"]);
-                    $details = self::getProductDetail($product["product_id"]);
+                    $rates = self::getProductRate($product["id"]);
+                    $details = self::getProductDetail($product["id"]);
 
                     foreach ($details as $index => $detail) {
                         $imageStmt = parent::$connection->prepare("SELECT * FROM product_images WHERE product_id = ?");
@@ -121,11 +121,11 @@ class Product extends Database
             foreach ($products as $key => $product) {
                 if ($product) {
 
-                    $rates = self::getProductRate($product["product_id"]);
-                    $details = self::getProductDetail($product["product_id"]);
+                    $rates = self::getProductRate($product["id"]);
+                    $details = self::getProductDetail($product["id"]);
 
                     foreach ($details as $index => $detail) {
-                        $imageStmt = parent::$connection->prepare("SELECT * FROM product_images WHERE product_id = ?");
+                        $imageStmt = parent::$connection->prepare("SELECT * FROM product_images WHERE id = ?");
                         $imageStmt->bind_param("i", $detail["detail_id"]);
                         $images = parent::select($imageStmt);
                         $products[$key]["details"] = $detail;
@@ -148,8 +148,8 @@ class Product extends Database
         foreach ($products as $key => $product) {
             if ($product) {
 
-                $rates = self::getProductRate($product["product_id"]);
-                $details = self::getProductDetail($product["product_id"]);
+                $rates = self::getProductRate($product["id"]);
+                $details = self::getProductDetail($product["id"]);
 
                 foreach ($details as $index => $detail) {
                     $imageStmt = parent::$connection->prepare("SELECT * FROM product_images WHERE product_id = ?");
@@ -219,8 +219,8 @@ class Product extends Database
         foreach ($products as $key => $product) {
             if ($product) {
 
-                $rates = self::getProductRate($product["product_id"]);
-                $details = self::getProductDetail($product["product_id"]);
+                $rates = self::getProductRate($product["id"]);
+                $details = self::getProductDetail($product["id"]);
 
                 foreach ($details as $index => $detail) {
                     $imageStmt = parent::$connection->prepare("SELECT * FROM product_images WHERE product_id = ?");
@@ -239,14 +239,14 @@ class Product extends Database
 
     public static function getProductSales()
     {
-        $productStmt = parent::$connection->prepare("SELECT products.*, sales.sale_percent FROM products JOIN sales WHERE products.product_id = sales.product_id GROUP BY product_id");
+        $productStmt = parent::$connection->prepare("SELECT products.*, sales.sale_percent FROM products JOIN sales WHERE products.id = sales.id GROUP BY id");
         $products = parent::select($productStmt);
 
         foreach ($products as $key => $product) {
             if ($product) {
 
-                $rates = self::getProductRate($product["product_id"]);
-                $details = self::getProductDetail($product["product_id"]);
+                $rates = self::getProductRate($product["id"]);
+                $details = self::getProductDetail($product["id"]);
 
                 foreach ($details as $index => $detail) {
                     $imageStmt = parent::$connection->prepare("SELECT * FROM product_images WHERE product_id = ?");

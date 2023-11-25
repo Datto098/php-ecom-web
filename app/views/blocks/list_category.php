@@ -38,13 +38,13 @@
                         foreach ($category_data as $key =>
                             $category) { ?>
                             <tr>
-                                <td class="py-2"><?= $category["category_id"] ?></td>
+                                <td class="py-2"><?= $category["id"] ?></td>
                                 <td class="py-2"><?= $category["category_name"] ?></td>
                                 <td class="py-2"><?= $category["parent_id"] != null ? $category["parent_id"] : "Supper Category" ?></td>
                                 <td>
                                     <div class="">
-                                        <button class="btn btn-primary" data-edit="<?= $category["category_id"] ?>">Edit</button>
-                                        <a class="btn btn-danger" href="./delete.php?id=<?= $category["category_id"] ?>" onclick="return deleteCommit();">Delete</a>
+                                        <button class="btn btn-primary" data-edit="<?= $category["id"] ?>">Edit</button>
+                                        <a class="btn btn-danger" href="./delete.php?id=<?= $category["id"] ?>" onclick="return deleteCommit();">Delete</a>
                                     </div>
                                 </td>
                             </tr>
@@ -90,8 +90,8 @@
                 <div class="select_category">
                     <?php
                     foreach ($category_data as $key => $category) { ?>
-                        <label for="input_category_id_<?= $category['category_id'] ?>">
-                            <input type="radio" name="parent_id" id="input_category_id_<?= $category['category_id'] ?>" value="<?= $category['category_id'] ?>">
+                        <label for="input_category_id_<?= $category['id'] ?>">
+                            <input type="radio" name="parent_id" id="input_category_id_<?= $category['id'] ?>" value="<?= $category['id'] ?>">
                             <?= $category['category_name'] ?>
                         </label>
                     <?php
@@ -152,7 +152,7 @@
             fetchData(apiUrl + "?id=" + idEdit, "GET")
                 .then(data => {
                     const category = data[0];
-                    inputCategoryId.value = category.category_id;
+                    inputCategoryId.value = category.id;
                     inputCategoryName.value = category.category_name;
                     if (category.parent_id != null) {
                         inputParentId.value = category.parent_id;

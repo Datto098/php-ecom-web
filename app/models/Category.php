@@ -18,7 +18,7 @@ class Category extends Database
         $categories = parent::select($categoryStmt);
 
         foreach ($categories as $key => $category) {
-            $result = self::getChildCategories($categories, $category['category_id']);
+            $result = self::getChildCategories($categories, $category['id']);
             $categories[$key]["child_category"] = $result;
         }
 
@@ -36,7 +36,7 @@ class Category extends Database
         $result = array();
         foreach ($categories as $key => $item) {
             if ($item['parent_id'] == $parentId) {
-                $item['child_category'] = self::getChildCategories($categories, $item['category_id']);
+                $item['child_category'] = self::getChildCategories($categories, $item['id']);
                 array_push($result, $item);
             }
         }
@@ -45,7 +45,7 @@ class Category extends Database
 
     public static function getParentCategoryId()
     {
-        $categoryStmt = parent::$connection->prepare("SELECT category_name ,category_id FROM categories WHERE parent_id IS NULL");
+        $categoryStmt = parent::$connection->prepare("SELECT category_name ,id FROM categories WHERE parent_id IS NULL");
         return parent::select($categoryStmt);
     }
 
@@ -53,7 +53,7 @@ class Category extends Database
 
     public static function getAmountProductInCategory($categoryId)
     {
-        $categoryStmt = parent::$connection->prepare("SELECT COUNT(*) as amount_product FROM products WHERE category_id IN (SELECT category_id FROM categories WHERE parent_id IN (SELECT category_id FROM categories WHERE parent_id = ?))");
+        $categoryStmt = parent::$connection->prepare("SELECT COUNT(*) as amount_product FROM products WHERE id IN (SELECT id FROM categories WHERE parent_id IN (SELECT id FROM categories WHERE parent_id = ?))");
         $categoryStmt->bind_param("i", $categoryId);
         return parent::select($categoryStmt);
     }
@@ -61,7 +61,7 @@ class Category extends Database
 
     public static function deleteCategoryById($categoryId)
     {
-        $sql = "DELETE FROM categories WHERE category_id = ?";
+        $sql = "DELETE FROM categories WHERE id = ?";
         $stmt = parent::$connection->prepare($sql);
         $stmt->bind_param("i", $categoryId);
         return $stmt->execute();
@@ -69,7 +69,7 @@ class Category extends Database
 
     public static function deleteCategoryAndSubcategories($categoryId)
     {
-        $subcategoriesStmt = parent::$connection->prepare("SELECT category_id FROM categories WHERE parent_id = ?");
+        $subcategoriesStmt = parent::$connection->prepare("SELECT id FROM categories WHERE parent_id = ?");
         $subcategoriesStmt->bind_param("i", $categoryId);
         $subcategoriesStmt->execute();
         $subcategoriesResult = $subcategoriesStmt->get_result();
@@ -78,12 +78,12 @@ class Category extends Database
         $deleteStmt->bind_param("i", $categoryId);
         $successParentDelete = $deleteStmt->execute();
 
-        $deleteStmt = parent::$connection->prepare("DELETE FROM categories WHERE category_id = ?");
+        $deleteStmt = parent::$connection->prepare("DELETE FROM categories WHERE id = ?");
         $deleteStmt->bind_param("i", $categoryId);
         $successCategoryDelete = $deleteStmt->execute();
 
         while ($row = $subcategoriesResult->fetch_assoc()) {
-            $successSubcategoryDelete = self::deleteCategoryAndSubcategories($row['category_id']);
+            $successSubcategoryDelete = self::deleteCategoryAndSubcategories($row['id']);
             if (!$successSubcategoryDelete) {
                 return false;
             }
@@ -100,12 +100,12 @@ class Category extends Database
     public static function updateCategoryById($categoryId, $categoryName, $parentId = null)
     {
         if ($parentId != null) {
-            $sql = "UPDATE categories SET category_name = ?, parent_id= ? WHERE category_id = ?";
+            $sql = "UPDATE categories SET category_name = ?, parent_id= ? WHERE id = ?";
             $stmt = parent::$connection->prepare($sql);
             $stmt->bind_param("sii", $categoryName, $parentId, $categoryId);
             return $stmt->execute();
         } else {
-            $sql = "UPDATE categories SET category_name = ? WHERE category_id = ?";
+            $sql = "UPDATE categories SET category_name = ? WHERE id = ?";
             $stmt = parent::$connection->prepare($sql);
             $stmt->bind_param("si", $categoryName, $categoryId);
             return $stmt->execute();
@@ -116,7 +116,7 @@ class Category extends Database
     {
         $html = '';
         foreach ($categories as $category) {
-            $html .= str_repeat(' ', $indent * 4) . '<li class="category_selected" data-category-id="' . $category['category_id'] . '">' . $category['category_name'];
+            $html .= str_repeat(' ', $indent * 4) . '<li class="category_selected" data-category-id="' . $category['id'] . '">' . $category['category_name'];
             if (!empty($category['child_category'])) {
                 $html .= '<ul class="col">';
                 $html .= self::generateMenuHtml($category['child_category'], $indent + 1);
@@ -136,7 +136,7 @@ class Category extends Database
     public static function findCategory($valueSearch)
     {
         if (is_numeric($valueSearch)) {
-            $categoryStmt = parent::$connection->prepare("SELECT * FROM categories WHERE category_id = ?");
+            $categoryStmt = parent::$connection->prepare("SELECT * FROM categories WHERE id = ?");
             $categoryStmt->bind_param("i", $valueSearch);
         } else {
             $valueSearch = "%" . $valueSearch . "%";
@@ -149,7 +149,7 @@ class Category extends Database
 
     public static function getCategoryById($categoryId)
     {
-        $categoryStmt = parent::$connection->prepare("SELECT * FROM categories WHERE category_id = ?");
+        $categoryStmt = parent::$connection->prepare("SELECT * FROM categories WHERE id = ?");
         $categoryStmt->bind_param("i", $categoryId);
         return parent::select($categoryStmt);
     }
