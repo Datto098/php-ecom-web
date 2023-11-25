@@ -139,18 +139,11 @@ background: #000;
 color : #fff;
 }
 </style>
+
+    <link rel="stylesheet" href="../../public/css/css-input-file.css">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
 
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="../../css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="../../css/font-awesome.min.css" type="text/css" />
-    <link rel="stylesheet" href="../../css/elegant-icons.css" type="text/css" />
-    <link rel="stylesheet" href="../../css/magnific-popup.css" type="text/css" />
-    <link rel="stylesheet" href="../../css/nice-select.css" type="text/css" />
-    <link rel="stylesheet" href="../../css/owl.carousel.min.css" type="text/css" />
-    <link rel="stylesheet" href="../../css/slicknav.min.css" type="text/css" />
-    <link rel="stylesheet" href="../../css/dashboard.css" type="text/css" />
 </head>
 
 <body>
@@ -213,7 +206,6 @@ color : #fff;
 
       <div class="d-flex align-items-start">
         <img class="avata" src="https://demos.themeselection.com/materio-bootstrap-html-admin-template/assets/img/avatars/17.png" style="width: 50px; border-radius: 99px; margin-right: 15px;" alt="" >
-        
       </div>
 
       <div class="py-4 px-3 rounded-2 d-flex flex-column box-admin position-absolute bg-white d-none" style="width: 350px; top: 60px; right: 0; border: 1px solid #eee;">
@@ -230,6 +222,13 @@ color : #fff;
         echo $slot;
     }
     ?>
+
+
+
+
+
+
+
     <!-- Js Plugins -->
     <script>
 	/*---------------------
@@ -238,8 +237,8 @@ color : #fff;
 
 	const avata = document.querySelector('.avata');
 	const boxAdmin = document.querySelector('.box-admin');
-	const btnUserAdd = document.querySelector('.btn-user-add');
-	const userAdd = document.querySelector('.user-add');
+	// const btnUserAdd = document.querySelector('.btn-user-add');
+	// const userAdd = document.querySelector('.user-add');
 	
 	
 	
@@ -263,27 +262,16 @@ color : #fff;
 	}
 	
 	
-	function clickButtonToOn() {
-		userAdd.classList.add('d-block');
-		userAdd.classList.remove('d-none');
-	}
+	// function clickButtonToOn() {
+	// 	userAdd.classList.add('d-block');
+	// 	userAdd.classList.remove('d-none');
+	// }
 	</script>
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 			crossorigin="anonymous">
-  </script>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="../../js/jquery-3.3.1.min.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
-    <script src="../../js/jquery.nice-select.min.js"></script>
-    <script src="../../js/jquery.nicescroll.min.js"></script>
-    <script src="../../js/jquery.magnific-popup.min.js"></script>
-    <script src="../../js/jquery.countdown.min.js"></script>
-    <script src="../../js/jquery.slicknav.js"></script>
-    <script src="../../js/mixitup.min.js"></script>
-    <script src="../../js/owl.carousel.min.js"></script>
+      </script>
 </body>
 
 </html>

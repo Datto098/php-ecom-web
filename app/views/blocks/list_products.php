@@ -25,49 +25,56 @@
                                 <div>
                                         <a class="button btn btn-user-add" style="background-color: #9055fd;"
                                                 onclick="clickButtonToOn()" href="create.php">Add
-                                                Accout</a>
+                                                Product</a>
                                 </div>
                         </div>
                 </div>
 
 
 
+                <div class="table w-100">
                 <table class="w-100">
-                        <thead class="bg-light text-dark">
+                        <thead class="bg-light text-dark ">
                                 <th>id</th>
-                                <th>username</th>
-                                <th>email</th>
-                                <th>password</th>
-                                <th>fullname</th>
-                                <th>role</th>
+                                <th>description</th>
+                                <th>brand</th>
+                                <th>name</th>
+                                <th>price</th>
+                                <th>category_id</th>
                                 <th>action</th>
                         </thead>
                         <tbody>
 
-                                <?php foreach ($users as $user): ?>
+                                <?php foreach($products as $product): ?>
                                 <tr>
-                                        <td class="py-2"><?php echo $user['id'] ?></td>
-                                        <td class="py-2"><?php echo $user['username'] ?></td>
-                                        <td><?php echo $user['email'] ?></td>
-                                        <td class="py-2"><?php echo $user['password'] ?></td>
-                                        <td class="py-2"><?php echo $user['fullname'] ?></td>
-                                        <td class="py-2"><?php echo $user['role'] ?></td>
+                                        <td class="py-2 px-2"><?php echo $product['id'] ?></td>
+                                        
+                                        <td class="py-2 px-2" >
+                                        <div style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis; width: 150px;">
+                                        <?php echo $product['product_desc'] ?>
+                                        </div>
+                                    </td>
+                                        <td class="py-2 px-2"><?php echo $product['product_brand'] ?></td>
+                                        <td class="py-2 px-2"><?php echo $product['product_name'] ?></td>
+                                        <td class="py-2 px-2"><?php echo $product['product_price'] ?></td>
+                                        <td class="py-2 px-2"><?php echo $product['category_id'] ?></td>
+                                       
 
                                         <td>
-                                                <div class="d-flex" style="justify-content: space-between;">
-                                                        <a class="btn btn-primary" href="edit.php?id=<?php echo $user['id'] ?>">Edit</a>
-                                                        <a class="btn btn-danger" href="destroy.php?id=<?php echo $user['id'] ?>"
+                                                <div class="d-flex">
+                                                        <a class="btn btn-primary me-3" href="edit.php?id=<?php echo $user['id'] ?>">Edit</a>
+                                                        <a class="btn btn-danger me-3" href="destroy.php?id=<?php echo $user['id'] ?>"
                                                                 onclick="return deleteCommit();">Delete</a>
-                                                        <a class="btn btn-secondary" href="show.php?id=<?php echo $user['id'] ?>"
+                                                        <a class="btn btn-secondary me-3" href="show.php?id=<?php echo $user['id'] ?>"
                                                                 >Details</a>
                                                 </div>
                                         </td>
 
                                 </tr>
-
                                 <?php endforeach ?>
 
                         </tbody>
                 </table>
+                </div>
 
         </div>
