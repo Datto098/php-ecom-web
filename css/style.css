@@ -4104,12 +4104,12 @@ Login and register
 	}
 }
 
-/* .product__item__text .rating .fa.fa-star-o {
-	margin-right: 0 !important;
-} */
-
 .product__item.sale .product__item__text .rating i.fa.fa-star-o {
 	color: #ccc;
+}
+
+.product__item.sale .product__item__text .rating i.fa.fa-star {
+	color: #f9ca24 !important;
 }
 
 .product__item__text .rating {
@@ -4120,4 +4120,10 @@ Login and register
 
 .product__item__text .rating i {
 	margin-right: -5px;
+}
+
+.product__item__text .rating i.fa.fa-star {
+	font-size: 14px;
+	color: #f9ca24;
+	margin-right: 0 !important;
 }

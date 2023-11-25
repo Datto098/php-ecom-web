@@ -1,14 +1,14 @@
 <div class="container">
 <div class="position-absolute py-5 px-3 bg-white"
 			style="">
-			<form action="update.php" method="post">
+			<form action="UpdateCategory" method="post">
 				<div class="row">
 				
 					<div
 						class="mb-3 col-12 col-sm-6 form-password-toggle fv-plugins-icon-container">
 						<div class="input-group input-group-merge">
 							<div class="form-floating form-floating-outline">
-								<input value="<?php if (!empty($_GET['id'])) { echo $_GET['id'] ;} ?>" class="form-control" type="text" id="id"
+								<input value="" class="form-control" type="text" id="id"
 									name="id" placeholder="············"> <label
 									for="id">id</label>
 							</div>

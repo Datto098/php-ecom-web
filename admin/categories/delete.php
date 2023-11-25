@@ -14,8 +14,15 @@ foreach ($$request as $key => $value) {
 }
 
 $conn = new Database();
-$product = new Product();
+$category = new Category();
 
 
-header("Content-Type: application/json");
-echo json_encode($product->getAllProducts());
+// Delete category
+if (isset($id)) {
+    if ($category->deleteCategoryAndSubcategories($id)) {
+        echo "<script>alert('Xóa thành công')</script>";
+        header("location: ./");
+    } else {
+        echo "<script>alert('Xảy ra lỗi trong qúa trình xóa')</script>";
+    }
+}

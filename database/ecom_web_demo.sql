@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 25, 2023 at 11:51 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Máy chủ: localhost
+-- Thời gian đã tạo: Th10 21, 2023 lúc 05:35 AM
+-- Phiên bản máy phục vụ: 10.4.28-MariaDB
+-- Phiên bản PHP: 8.1.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,19 +18,17 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ecom_web_demo`
+-- Cơ sở dữ liệu: `ecom_web_demo`
 --
-CREATE DATABASE IF NOT EXISTS `ecom_web_demo` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `ecom_web_demo`;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cart`
+-- Cấu trúc bảng cho bảng `cart`
 --
 
 CREATE TABLE `cart` (
-  `id` int(11) NOT NULL,
+  `cart_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
@@ -44,24 +42,24 @@ CREATE TABLE `cart` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categories`
+-- Cấu trúc bảng cho bảng `categories`
 --
 
 CREATE TABLE `categories` (
-  `id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
   `category_name` varchar(255) NOT NULL,
   `parent_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `categories`
+-- Đang đổ dữ liệu cho bảng `categories`
 --
 
-INSERT INTO `categories` (`id`, `category_name`, `parent_id`) VALUES
+INSERT INTO `categories` (`category_id`, `category_name`, `parent_id`) VALUES
 (1, 'Nam', NULL),
 (2, 'Nữ', NULL),
 (3, 'Trẻ em', NULL),
-(4, 'Siêu sale tháng 11', NULL),
+(4, 'Siêu sale', NULL),
 (14, 'Áo', 1),
 (15, 'Quần nam', 1),
 (16, 'Giày & Dép', 1),
@@ -139,11 +137,11 @@ INSERT INTO `categories` (`id`, `category_name`, `parent_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
+-- Cấu trúc bảng cho bảng `orders`
 --
 
 CREATE TABLE `orders` (
-  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `total_amount` decimal(10,2) DEFAULT NULL,
   `order_status` varchar(255) DEFAULT NULL,
@@ -154,7 +152,7 @@ CREATE TABLE `orders` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_details`
+-- Cấu trúc bảng cho bảng `order_details`
 --
 
 CREATE TABLE `order_details` (
@@ -168,11 +166,11 @@ CREATE TABLE `order_details` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Cấu trúc bảng cho bảng `products`
 --
 
 CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
   `product_img` text NOT NULL,
   `product_desc` text NOT NULL,
   `product_brand` varchar(255) NOT NULL,
@@ -182,21 +180,25 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `products`
+-- Đang đổ dữ liệu cho bảng `products`
 --
 
-INSERT INTO `products` (`id`, `product_img`, `product_desc`, `product_brand`, `product_name`, `product_price`, `category_id`) VALUES
+INSERT INTO `products` (`product_id`, `product_img`, `product_desc`, `product_brand`, `product_name`, `product_price`, `category_id`) VALUES
 (17, '26a096a6a1cd164effeb6e7bcbe9e93f.jpg', 'Áo sơ mi croptop trẻ trung, năng động, thích hợp với nàng yêu thích sự cá tính.\r\n\r\nThiết kế áo dáng croptop với cổ đức cùng tay dài. \r\n\r\nÁo được tạo kiểu 2 lớp: 1 lớp cổ V bên trong và  1 lớp áo giả khoác bên ngoài. \r\n\r\nNàng có thể lựa chọn mix áo cùng chân váy, quần dài, quần short đều rất phù hợp. ', 'Ivymoda', 'ÁO SƠ MI CROPTOP', 1290000, 43),
-(18, '3dd38dc22de76b4bb376ce28cfd0fcfa.jpg', 'Sang trọng, thời thượng qua mẫu sơ mi lụa được Quý cô yêu thích từ nhà IVY moda. \r\n\r\nÁo cổ thuyền, dáng thường, thiết kế vai chờm độc đáo cùng điểm nhấn rút vai mới lạ. Để từ đó tạo bên tay lệch bắt mắt. \r\n\r\nCùng với đó, thiết kế lựa chọn chất liệu lụa mềm mại, mang đến cảm giác mặc nhẹ nhàng và vô cùng thoải mái. ', 'Ivymoda', 'ÁO LỤA CỔ THUYỀN', 890000, 43);
+(18, '3dd38dc22de76b4bb376ce28cfd0fcfa.jpg', 'Sang trọng, thời thượng qua mẫu sơ mi lụa được Quý cô yêu thích từ nhà IVY moda. \r\n\r\nÁo cổ thuyền, dáng thường, thiết kế vai chờm độc đáo cùng điểm nhấn rút vai mới lạ. Để từ đó tạo bên tay lệch bắt mắt. \r\n\r\nCùng với đó, thiết kế lựa chọn chất liệu lụa mềm mại, mang đến cảm giác mặc nhẹ nhàng và vô cùng thoải mái. ', 'Ivymoda', 'ÁO LỤA CỔ THUYỀN', 890000, 43),
+(19, '167bfea45ab9765d9161a2bb2e8f18e7.jpg', 'Thiết kế áo kiểu nhẹ nhàng, thanh lịch và tinh tế.\r\n\r\nÁo dáng suông, cổ tròn cách điệu, có khuy cài. Tay áo thiết kế cánh dơi nhẹ, mang  đến cảm giác mềm mại.\r\n\r\nĐặc biệt, áo sử dụng chất liệu lụa sang trọng, thích hợp diện trong nhiều hoàn cảnh khác nhau. ', 'Ivymoda', 'ÁO LỤA TAY KIỂU', 850000, 44),
+(20, '8594ae701bddf9d9c0127a350d9dff28.jpg', 'Nàng công sở yêu thích một chút điệu đà, nữ tính chắc chắn không nên bỏ lỡ thiết kế sơ mi Peplum cách điệu lần này.\r\n\r\nÁo được lên dáng xếp tà tạo cổ chữ V quyến rũ, phần tay chờm có điểm rút dây điều chỉnh độ co. Thân dưới áo tạo tà Peplum độc đáo, nhẹ nhàng, mềm mại nhưng vẫn thật  sang trọng và thời thượng.\r\n\r\nGợi ý nàng mix áo cùng chân váy hoặc quần đều phù hợp, thêm các phụ kiện như túi sách, vòng cổ... để hoàn thiện cho Outfit của  mình. ', 'Ivymoda', 'ÁO SƠ MI XẾP TÀ PEPLUM', 890000, 44),
+(21, '5417f5b64699195d74da5ccda0b979c0.jpeg', 'Set đồ bao gồm áo croptop và zuýp bút chì. Áo dáng crop xếp ly dưới, tay xếp ly phồng. Áo cái bằng hàng khuy trắng thanh lịch. Chân váy cạp cao, cạp may tạo kiểu, độ dài qua đầu gối. Set đồ được làm từ chất liệu tuysi cao cấp giúp giữ form dáng luôn chỉn chu.\r\n\r\nChẳng cần phải đau đầu khi phối đồ, hãy lựa chọn một outfit theo set khi đi làm hoặc xuống phố. Bộ đôi áo croptop và zuýp sẽ giúp tôn lên dáng xinh của nàng.', 'Ivymoda', 'SET ÁO CROPTOP TAY BỒNG VÀ ZUÝP BÚT CHÌ', 445000, 45),
+(22, '071952a1a3767560aef35a53b1d80109.jpg', 'Áo kiểu nữ cổ V tay lửng, cổ tay bo chun phồng, áo cài bằng hàng khuy phía trước. Dáng áo croptop, eo may chun nhúm bản to trẻ trung, tôn vòng eo nàng. Chất liệu vải lụa mềm mịn, thoáng mát cùng họa tiết kẻ ngang và viền lông nổi độc đáo.\r\n\r\nThiết kế giúp làm tôn lên đường nét tinh tế, mềm mại và quyến rũ của phái đẹp. Kết hợp áo với chân vấy ngắn hoặc jeans là nàng đã có 1 outfit đi chơi cực trẻ trung và nữ tính.\r\n\r\n', 'Ivymoda', 'ÁO CROPTOP LỤA HỌA TIẾT KẺ NGANG', 950000, 45);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_details`
+-- Cấu trúc bảng cho bảng `product_details`
 --
 
 CREATE TABLE `product_details` (
-  `id` int(11) NOT NULL,
+  `detail_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `product_color` varchar(50) NOT NULL,
   `product_size` varchar(10) NOT NULL,
@@ -204,30 +206,34 @@ CREATE TABLE `product_details` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `product_details`
+-- Đang đổ dữ liệu cho bảng `product_details`
 --
 
-INSERT INTO `product_details` (`id`, `product_id`, `product_color`, `product_size`, `product_quantity`) VALUES
+INSERT INTO `product_details` (`detail_id`, `product_id`, `product_color`, `product_size`, `product_quantity`) VALUES
 (25, 17, 'Trắng', 'M', 10),
-(26, 18, 'Vàng mustard', 'L', 10);
+(26, 18, 'Vàng mustard', 'L', 10),
+(27, 19, 'Vàng mustard', 'L', 10),
+(28, 20, 'Xanh ghi đá', 'L', 10),
+(29, 21, 'Hồng san hô', 'L', 10),
+(30, 22, 'Họa tiết Xanh tím than', 'L', 10);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_images`
+-- Cấu trúc bảng cho bảng `product_images`
 --
 
 CREATE TABLE `product_images` (
-  `id` int(11) NOT NULL,
+  `image_id` int(11) NOT NULL,
   `href_value` text NOT NULL,
   `product_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `product_images`
+-- Đang đổ dữ liệu cho bảng `product_images`
 --
 
-INSERT INTO `product_images` (`id`, `href_value`, `product_id`) VALUES
+INSERT INTO `product_images` (`image_id`, `href_value`, `product_id`) VALUES
 (41, 'e2119c7d41f71513c83fc049fd360b02.jpg', 25),
 (42, 'e36f097765ca983eb9f0fef09930da51.jpg', 25),
 (43, 'd975e60753276755830ce5148b88a0bb.jpg', 25),
@@ -242,27 +248,59 @@ INSERT INTO `product_images` (`id`, `href_value`, `product_id`) VALUES
 (52, '99e07a9b3279837295b83734591233ac.jpg', 26),
 (53, 'af19db1a796fce1cfa55ec52d0a139e0.jpg', 26),
 (54, '51f813755233b002d8f4464b12771e32.jpg', 26),
-(55, 'https://lh6.googleusercontent.com/xr1tWQ0zigU8mFvMGfMmW2oiX9yinGbn8LaRLMHnPXvsh7Bg1ABs2Tk8ZfAoQMv6mPw9Id-iaSB1zuU5UTJmCcnTybFvdiaC-EHxrdTbRmNJT22y1tmSb5rE1--xKXg3TrmwO2z3', 17),
-(56, 'https://lh6.googleusercontent.com/xr1tWQ0zigU8mFvMGfMmW2oiX9yinGbn8LaRLMHnPXvsh7Bg1ABs2Tk8ZfAoQMv6mPw9Id-iaSB1zuU5UTJmCcnTybFvdiaC-EHxrdTbRmNJT22y1tmSb5rE1--xKXg3TrmwO2z3', 18),
-(57, 'https://mabustudio.com/?attachment_id=3204', 17),
-(58, 'https://mabustudio.com/?attachment_id=3204', 17);
+(55, '167bfea45ab9765d9161a2bb2e8f18e7.jpg', 27),
+(56, '470a22e2e33e05c4e2b45a52dd47eaab.jpg', 27),
+(57, '742c30390328ec2b387a338c3f0b4643.jpg', 27),
+(58, 'afb8c189e6a098cdc0637139b6ff4984.jpg', 27),
+(59, 'f16bdd5c840f109f4106c0618599f786.jpg', 27),
+(60, 'fc84b7fee0da714d477993096facc31c.jpg', 27),
+(61, '2d2cbacf48a205d45e4b608d906ff484.jpg', 28),
+(62, '10dcdc6dd20bd2f361a187cf2386ca2b.jpg', 28),
+(63, '8594ae701bddf9d9c0127a350d9dff28.jpg', 28),
+(64, 'a7b2fe4e401425b92d044ef2487a2ab2.jpg', 28),
+(65, 'e9dfd5cc02895cdaaaea1e50135777f7.jpg', 28),
+(66, 'eab97f8303b60cf92d8449dfa75d3133.jpg', 28),
+(67, '1d84c3d47bcb9e2685a46572474ed740.jpeg', 29),
+(68, '5417f5b64699195d74da5ccda0b979c0.jpeg', 29),
+(69, '9f5ddb834d62aeed037385b8ada95974.jpeg', 29),
+(70, '13f6d59d3138952dd85af9cc8b988864.jpeg', 29),
+(71, 'd5635f6a22ae082cabb76f57f70d157d.jpeg', 29),
+(72, '38bd47f3ca762609c59cb8d868d0831b.jpeg', 29),
+(73, '071952a1a3767560aef35a53b1d80109.jpg', 30),
+(74, '568656c0f6e9798a61aec6c21e8a823d.jpg', 30),
+(75, '4b2a4ec1a6f38dd1dc6d48c21ee6ddc4.jpg', 30),
+(76, '9c353e1e0cbd37a15464212174cdb53e.jpg', 30),
+(77, '65ef2a2b239c7ad3783244c216eea5e7.jpg', 30),
+(78, '74f19c391e52814a77f01c1d420eba3c.jpg', 30);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rates`
+-- Cấu trúc bảng cho bảng `rates`
 --
 
 CREATE TABLE `rates` (
-  `id` int(11) NOT NULL,
+  `rate_id` int(11) NOT NULL,
   `rate_value` int(11) NOT NULL,
   `product_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `rates`
+--
+
+INSERT INTO `rates` (`rate_id`, `rate_value`, `product_id`) VALUES
+(1, 5, 17),
+(2, 4, 17),
+(3, 4, 17),
+(4, 4, 17),
+(5, 4, 17),
+(6, 5, 17);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shipping_addresses`
+-- Cấu trúc bảng cho bảng `shipping_addresses`
 --
 
 CREATE TABLE `shipping_addresses` (
@@ -280,11 +318,11 @@ CREATE TABLE `shipping_addresses` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Cấu trúc bảng cho bảng `users`
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `username` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -293,42 +331,40 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `fullname`, `role`) VALUES
-(5, 'admin', 'admin@gmail.com', '$2y$10$f0qAzSGAKrW6LfyFv7Gl9OF0qNCCxkC6EDmkJ.0SKJm7kVDk9oAZq', 'Nguyen Tien Dat', 1),
-(7, 'admin3', 'tannp.42.student@fit.tdc.edu.vn', '$2y$10$TEzQ/de3x5qGSvhEbyLpPOUvLcLXT2pZkWFIvyF4P5abGmubzXXBC', 'Nguyen Phuong Tan', 0),
-(9, 'B1HA6654', 'tannp.42.student@fit.tdc.edu.vn', '$2y$10$qQAH81EBhSri3y5xQiINLO4QC2mvYJk6HbpfPmVYMvnd5X8ZhcBGu', 'Nguyen Phuong Tan', 0);
+INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `fullname`, `role`) VALUES
+(5, 'admin', 'admin@gmail.com', '$2y$10$f0qAzSGAKrW6LfyFv7Gl9OF0qNCCxkC6EDmkJ.0SKJm7kVDk9oAZq', 'Nguyen Tien Dat', 1);
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `cart`
+-- Chỉ mục cho bảng `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`cart_id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `product_id` (`product_id`);
 
 --
--- Indexes for table `categories`
+-- Chỉ mục cho bảng `categories`
 --
 ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`category_id`),
   ADD KEY `category_ibfk_1` (`parent_id`);
 
 --
--- Indexes for table `orders`
+-- Chỉ mục cho bảng `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`order_id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `order_details`
+-- Chỉ mục cho bảng `order_details`
 --
 ALTER TABLE `order_details`
   ADD PRIMARY KEY (`id`),
@@ -336,150 +372,150 @@ ALTER TABLE `order_details`
   ADD KEY `product_id` (`product_id`);
 
 --
--- Indexes for table `products`
+-- Chỉ mục cho bảng `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`product_id`);
 
 --
--- Indexes for table `product_details`
+-- Chỉ mục cho bảng `product_details`
 --
 ALTER TABLE `product_details`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`detail_id`),
   ADD KEY `product_detail_ibfk_1` (`product_id`);
 
 --
--- Indexes for table `product_images`
+-- Chỉ mục cho bảng `product_images`
 --
 ALTER TABLE `product_images`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`image_id`),
   ADD KEY `product_id` (`product_id`);
 
 --
--- Indexes for table `rates`
+-- Chỉ mục cho bảng `rates`
 --
 ALTER TABLE `rates`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`rate_id`);
 
 --
--- Indexes for table `shipping_addresses`
+-- Chỉ mục cho bảng `shipping_addresses`
 --
 ALTER TABLE `shipping_addresses`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `users`
+-- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `cart`
+-- AUTO_INCREMENT cho bảng `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `categories`
+-- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
--- AUTO_INCREMENT for table `orders`
+-- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `order_details`
+-- AUTO_INCREMENT cho bảng `order_details`
 --
 ALTER TABLE `order_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- AUTO_INCREMENT for table `product_details`
+-- AUTO_INCREMENT cho bảng `product_details`
 --
 ALTER TABLE `product_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT for table `product_images`
+-- AUTO_INCREMENT cho bảng `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
--- AUTO_INCREMENT for table `rates`
+-- AUTO_INCREMENT cho bảng `rates`
 --
 ALTER TABLE `rates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `shipping_addresses`
+-- AUTO_INCREMENT cho bảng `shipping_addresses`
 --
 ALTER TABLE `shipping_addresses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `cart`
+-- Các ràng buộc cho bảng `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
 --
--- Constraints for table `categories`
+-- Các ràng buộc cho bảng `categories`
 --
 ALTER TABLE `categories`
-  ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`);
+  ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`category_id`);
 
 --
--- Constraints for table `orders`
+-- Các ràng buộc cho bảng `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 --
--- Constraints for table `order_details`
+-- Các ràng buộc cho bảng `order_details`
 --
 ALTER TABLE `order_details`
-  ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
-  ADD CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+  ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
+  ADD CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
 --
--- Constraints for table `product_details`
+-- Các ràng buộc cho bảng `product_details`
 --
 ALTER TABLE `product_details`
-  ADD CONSTRAINT `product_detail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+  ADD CONSTRAINT `product_detail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
 --
--- Constraints for table `shipping_addresses`
+-- Các ràng buộc cho bảng `shipping_addresses`
 --
 ALTER TABLE `shipping_addresses`
-  ADD CONSTRAINT `shipping_addresses_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `shipping_addresses_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
