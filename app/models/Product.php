@@ -56,45 +56,31 @@ class Product extends Database
         ));
     }
 
-    // public static function getProductById($productId)
-    // {
-    //     $productStmt = parent::$connection->prepare("SELECT * FROM products WHERE product_id = ?");
-    //     $productStmt->bind_param("i", $productId);
-    //     $product = parent::select($productStmt);
+    public static function getProductById($productId)
+    {
+        $productStmt = parent::$connection->prepare("SELECT * FROM products WHERE product_id = ?");
+        $productStmt->bind_param("i", $productId);
+        $product = parent::select($productStmt);
 
-    //     if ($product) {
-    //         $imageStmt = parent::$connection->prepare("SELECT * FROM product_images WHERE product_id = ?");
-    //         $imageStmt->bind_param("i", $productId);
+        if ($product) {
+            $imageStmt = parent::$connection->prepare("SELECT * FROM product_images WHERE product_id = ?");
+            $imageStmt->bind_param("i", $productId);
 
-    //         $rateStmt = parent::$connection->prepare("SELECT * FROM rates WHERE product_id = ?");
-    //         $rateStmt->bind_param("i", $productId);
+            $rateStmt = parent::$connection->prepare("SELECT * FROM rates WHERE product_id = ?");
+            $rateStmt->bind_param("i", $productId);
 
-    //         $detailStmt = parent::$connection->prepare("SELECT * FROM product_details WHERE product_id = ?");
-    //         $detailStmt->bind_param("i", $productId);
+            $detailStmt = parent::$connection->prepare("SELECT * FROM product_details WHERE product_id = ?");
+            $detailStmt->bind_param("i", $productId);
 
-    //         $images = parent::select($imageStmt);
-    //         $rates = parent::select($rateStmt);
-    //         $details = parent::select($detailStmt);
+            $images = parent::select($imageStmt);
+            $rates = parent::select($rateStmt);
+            $details = parent::select($detailStmt);
 
-    //         $product[0]["product_images"] = $images;
-    //         $product[0]["rates"] = $rates;
-    //         $product[0]["details"] = $details;
-    //     }
-    //     return $product[0];
-    // }
-
-
-    //get product by id
-    public function getProductById($id) {
-        
-
-        $sql = parent::$connection->prepare("SELECT products.*,GROUP_CONCAT(product_images.href_value) as 'href_image' FROM `products` inner join product_images on product_images.product_id = products.id WHERE products.id= 17");
-        $sql->bind_param("i", $id); // it nhat la 2 tham so
-        return parent::select($sql)[0];
-        //info chính , anh1-anh2-anh3 , m-trang-200,l-den-100
-        //SELECT products.* FROM `products` inner join product_images on product_images.product_id = products.id;
-        //
-
+            $product[0]["product_images"] = $images;
+            $product[0]["rates"] = $rates;
+            $product[0]["details"] = $details;
+        }
+        return $product[0];
     }
 
     public static function getProductByCategoryId($categoryId)
@@ -162,8 +148,8 @@ class Product extends Database
         foreach ($products as $key => $product) {
             if ($product) {
 
-                $rates = self::getProductRate($product["id"]);
-                $details = self::getProductDetail($product["id"]);
+                $rates = self::getProductRate($product["product_id"]);
+                $details = self::getProductDetail($product["product_id"]);
 
                 foreach ($details as $index => $detail) {
                     $imageStmt = parent::$connection->prepare("SELECT * FROM product_images WHERE product_id = ?");
@@ -229,6 +215,32 @@ class Product extends Database
             $productStmt->bind_param("ii", $minPrice, $maxPrice);
             $products = parent::select($productStmt);
         }
+
+        foreach ($products as $key => $product) {
+            if ($product) {
+
+                $rates = self::getProductRate($product["product_id"]);
+                $details = self::getProductDetail($product["product_id"]);
+
+                foreach ($details as $index => $detail) {
+                    $imageStmt = parent::$connection->prepare("SELECT * FROM product_images WHERE product_id = ?");
+                    $imageStmt->bind_param("i", $detail["detail_id"]);
+                    $images = parent::select($imageStmt);
+                    $products[$key]["details"] = $detail;
+                    $products[$key]["details"]["product_detail_image"] = $images;
+                }
+
+                $products[$key]["rates"] = $rates[0];
+            }
+        }
+
+        return $products;
+    }
+
+    public static function getProductSales()
+    {
+        $productStmt = parent::$connection->prepare("SELECT products.*, sales.sale_percent FROM products JOIN sales WHERE products.product_id = sales.product_id GROUP BY product_id");
+        $products = parent::select($productStmt);
 
         foreach ($products as $key => $product) {
             if ($product) {
