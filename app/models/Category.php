@@ -31,11 +31,11 @@ class Category extends Database
         return $categories;
     }
 
-    public static function getChildCategories($categories, $parentId = 0)
+    public static function getChildCategories($categories, $parent_id = 0)
     {
         $result = array();
         foreach ($categories as $key => $item) {
-            if ($item['parent_id'] == $parentId) {
+            if ($item['parent_id'] == $parent_id) {
                 $item['child_category'] = self::getChildCategories($categories, $item['category_id']);
                 array_push($result, $item);
             }
@@ -67,55 +67,12 @@ class Category extends Database
         return $stmt->execute();
     }
 
-    public static function deleteCategoryAndSubcategories($categoryId)
+    public static function updateCategoryById($categoryId, $categoryName)
     {
-        // Lấy tất cả danh mục con của danh mục lớn
-        $subcategoriesStmt = parent::$connection->prepare("SELECT category_id FROM categories WHERE parent_id = ?");
-        $subcategoriesStmt->bind_param("i", $categoryId);
-        $subcategoriesStmt->execute();
-        $subcategoriesResult = $subcategoriesStmt->get_result();
-
-        // Xóa danh mục lớn và danh mục con
-        $deleteStmt = parent::$connection->prepare("DELETE FROM categories WHERE parent_id = ?");
-        $deleteStmt->bind_param("i", $categoryId);
-        $successParentDelete = $deleteStmt->execute();
-
-        // Xóa danh mục lớn
-        $deleteStmt = parent::$connection->prepare("DELETE FROM categories WHERE category_id = ?");
-        $deleteStmt->bind_param("i", $categoryId);
-        $successCategoryDelete = $deleteStmt->execute();
-
-        // Đệ quy xóa tất cả danh mục con
-        while ($row = $subcategoriesResult->fetch_assoc()) {
-            $successSubcategoryDelete = self::deleteCategoryAndSubcategories($row['category_id']);
-            // Kiểm tra xem xóa danh mục con đã thành công hay không
-            if (!$successSubcategoryDelete) {
-                return false;
-            }
-        }
-
-        $subcategoriesStmt->close();
-        $deleteStmt->close();
-
-        // Kiểm tra xem xóa danh mục lớn và danh mục con đã thành công hay không
-        return $successParentDelete && $successCategoryDelete;
-    }
-
-
-
-    public static function updateCategoryById($categoryId, $categoryName, $parentId = null)
-    {
-        if ($parentId != null) {
-            $sql = "UPDATE categories SET category_name = ?, parent_id= ? WHERE category_id = ?";
-            $stmt = parent::$connection->prepare($sql);
-            $stmt->bind_param("sii", $categoryName, $parentId, $categoryId);
-            return $stmt->execute();
-        } else {
-            $sql = "UPDATE categories SET category_name = ? WHERE category_id = ?";
-            $stmt = parent::$connection->prepare($sql);
-            $stmt->bind_param("si", $categoryName, $categoryId);
-            return $stmt->execute();
-        }
+        $sql = "UPDATE categories SET category_name = ? WHERE category_id = ?";
+        $stmt = parent::$connection->prepare($sql);
+        $stmt->bind_param("si", $categoryName, $categoryId);
+        return $stmt->execute();
     }
 
     public static function generateMenuHtml($categories, $indent = 0)
@@ -131,32 +88,5 @@ class Category extends Database
             $html .= '</li>';
         }
         return $html;
-    }
-
-    public static function getCategories()
-    {
-        $categoryStmt = parent::$connection->prepare("SELECT * FROM categories");
-        return parent::select($categoryStmt);
-    }
-
-    public static function findCategory($valueSearch)
-    {
-        if (is_numeric($valueSearch)) {
-            $categoryStmt = parent::$connection->prepare("SELECT * FROM categories WHERE category_id = ?");
-            $categoryStmt->bind_param("i", $valueSearch);
-        } else {
-            $valueSearch = "%" . $valueSearch . "%";
-            $categoryStmt = parent::$connection->prepare("SELECT * FROM categories WHERE category_name LIKE ?");
-            $categoryStmt->bind_param("s", $valueSearch);
-        }
-
-        return parent::select($categoryStmt);
-    }
-
-    public static function getCategoryById($categoryId)
-    {
-        $categoryStmt = parent::$connection->prepare("SELECT * FROM categories WHERE category_id = ?");
-        $categoryStmt->bind_param("i", $categoryId);
-        return parent::select($categoryStmt);
     }
 }

@@ -15,19 +15,12 @@ foreach ($$request as $key => $value) {
 
 $conn = new Database();
 $category = new Category();
-$product = new Product();
-$template = new Template();
-
-// Get all categories
 $category_data = $category->getAllCategories();
-
-
-// Get product sales
-$product_sale = $product->getProductSales();
+$template = new Template();
 
 $data = [
   'title' => 'Trang chủ',
-  'slot' => $template->render('blocks/home', ['category_data' => $category_data, 'product_sale_data' => $product_sale]),
+  'slot' => $template->render('home', ['category_data' => $category_data]),
 ];
 
 $template->view('layout', $data);
