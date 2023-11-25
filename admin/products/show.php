@@ -9,12 +9,12 @@ spl_autoload_register(function ($class) {
 
 $conn = new Database();
 $template = new Template();
-$userModels = new User();
-$users = $userModels->getAllUsers();
+$productModels = new Product();
+$products = $productModels->
 
 $data = [
-  'title' => 'Manage Ecom',
-  'slot' => $template->render('list_account', ["users"=>$users,]),
+  'title' => 'details products',
+  'slot' => $template->render('details_product', []),
 ];
 
 $template->view('layout_admin', $data);

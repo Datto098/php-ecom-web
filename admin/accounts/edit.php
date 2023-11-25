@@ -11,7 +11,7 @@ $conn = new Database();
 $template = new Template();
 
 $data = [
-  'title' => 'Manage Ecom',
+  'title' => 'Edit',
   'slot' => $template->render('edit_account', []),
 ];
 

@@ -1,21 +1,8 @@
 <div class="container">
 <div class="position-absolute py-5 px-3 bg-white"
 			style="">
-			<form action="update.php" method="post">
+			<form action="store.php" method="post">
 				<div class="row">
-				
-					<div
-						class="mb-3 col-12 col-sm-6 form-password-toggle fv-plugins-icon-container">
-						<div class="input-group input-group-merge">
-							<div class="form-floating form-floating-outline">
-								<input value="<?php if (!empty($_GET['id'])) { echo $_GET['id'] ;} ?>" class="form-control" type="text" id="id"
-									name="id" placeholder="············"> <label
-									for="id">id</label>
-							</div>
-						</div>
-						<div
-							class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
-					</div>
 					
 					<div
 						class="mb-3 col-12 col-sm-6 form-password-toggle fv-plugins-icon-container">
@@ -71,20 +58,20 @@
 
 					<div class="d-flex">
 						<span style="margin-right : 10px ; font-weight: bold">Role</span>
-						<div class="d-flex" class="me-4">
-						<label for="admin" >Admin</label>
-						<input type="radio" id="admin" value="1" name="role">
-						</div>
-						<div class="me-4">
-						<label for="user" >User</label>
+						<div class="me-4" style="margin-right: 15px;">
+						<label for="user" class="me-2">User</label>
 						<input type="radio" id="user" value="0" name="role">
 						</div>
+                        <div class="d-flex" class="me-4" >
+						<label for="admin" class="me-2"  >Admin</label>
+						<input type="radio" id="admin" value="1" name="role">
+						</div>
+						
 					</div>
-					
 					
 				</div>
 
-				<button type="submit" class="btn btn-primary">Update</button>
+				<button type="submit" class="btn btn-primary">Add</button>
 			</form>
 		</div>
 </div>
