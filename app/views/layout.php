@@ -54,7 +54,7 @@ $category_data = $category->getAllCategories();
   <div class="offcanvas-menu-wrapper">
     <div class="offcanvas__option">
       <div class="offcanvas__links">
-        <a href="login.php">Sign in</a>
+        <a href="#">Sign in</a>
         <a href="#">Sign up</a>
         <a href="#">Sign out</a>
       </div>

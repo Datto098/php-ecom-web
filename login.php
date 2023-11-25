@@ -16,7 +16,7 @@ $template = new Template();
 
 $data = [
   'title' => 'Login',
-  'slot' => $template->render('login', ['category_data' => $category_data]),
+  'slot' => $template->render('blocks/login', ['category_data' => $category_data]),
 ];
 
 $template->view('layout', $data);
