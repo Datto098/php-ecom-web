@@ -14,7 +14,7 @@ $template = new Template();
 
 $data = [
   'title' => 'Shop Details',
-  'slot' => $template->render('blocks/shop_details', ['category_data' => $category_data]),
+  'slot' => $template->render('shop_details', ['category_data' => $category_data]),
 ];
 
 $template->view('layout', $data);

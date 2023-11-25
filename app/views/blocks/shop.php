@@ -217,18 +217,18 @@
                         <?php foreach ($product_data as $key => $product) { ?>
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item sale">
-                                    <div class="product__item__pic set-bg" data-setbg="uploads/<?= $product['product_img'] ?>">
+                                    <div class="product__item__pic set-bg" data-setbg="public/uploads/<?= $product['product_img'] ?>">
                                         <span class="label">Sale</span>
                                         <ul class="product__hover">
                                             <li>
-                                                <a href="#"><img src="img/icon/heart.png" alt="" /></a>
+                                                <a href="#"><img src="public/img/icon/heart.png" alt="" /></a>
                                             </li>
                                             <li>
-                                                <a href="#"><img src="img/icon/compare.png" alt="" />
+                                                <a href="#"><img src="public/img/icon/compare.png" alt="" />
                                                     <span>Compare</span></a>
                                             </li>
                                             <li>
-                                                <a href="#"><img src="img/icon/search.png" alt="" /></a>
+                                                <a href="#"><img src="public/img/icon/search.png" alt="" /></a>
                                             </li>
                                         </ul>
                                     </div>

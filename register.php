@@ -15,7 +15,7 @@ $template = new Template();
 
 $data = [
     'title' => 'Register',
-    'slot' => $template->render('blocks/register', ['category_data' => $category_data]),
+    'slot' => $template->render('register', ['category_data' => $category_data]),
 ];
 
 $template->view('layout', $data);
