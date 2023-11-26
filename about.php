@@ -14,7 +14,7 @@ $template = new Template();
 
 $data = [
   'title' => 'About Me',
-  'slot' => $template->render('blocks/about', ['category_data' => $category_data]),
+  'slot' => $template->render('about', ['category_data' => $category_data]),
 ];
 
 $template->view('layout', $data);

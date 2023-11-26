@@ -43,18 +43,20 @@ class User extends Database
     }
 
     //destroy
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $sql = parent::$connection->prepare("delete from users where id=?");
-        $sql->bind_param("i",$id); 
+        $sql->bind_param("i", $id);
         return $sql->execute();
     }
 
     //store
-    public function store($username,$email,$password,$fullname,$role) {     
+    public function store($username, $email, $password, $fullname, $role)
+    {
 
         $password = password_hash($password, PASSWORD_DEFAULT);
         $sql = parent::$connection->prepare("insert into users (username,email,password,fullname,role) values(?,?,?,?,?)");
-        $sql->bind_param("ssssi",$username,$email,$password,$fullname,$role); 
+        $sql->bind_param("ssssi", $username, $email, $password, $fullname, $role);
         return $sql->execute();
     }
 
@@ -69,15 +71,11 @@ class User extends Database
 
 
     //update
-    public function update($username,$email,$password,$fullname,$role,$id) {
+    public function update($username, $email, $password, $fullname, $role, $id)
+    {
         $password = password_hash($password, PASSWORD_DEFAULT);
         $sql = parent::$connection->prepare("update users set username=?,email=?,password=?,fullname=?,role=? where id=?");
-        $sql->bind_param("ssssii",$username,$email,$password,$fullname,$role,$id);
+        $sql->bind_param("ssssii", $username, $email, $password, $fullname, $role, $id);
         return $sql->execute();
     }
-
-
-    //
-
-    
 }

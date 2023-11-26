@@ -14,7 +14,7 @@ $template = new Template();
 
 $data = [
   'title' => 'Contact',
-  'slot' => $template->render('blocks/contact', ['category_data' => $category_data]),
+  'slot' => $template->render('contact', ['category_data' => $category_data]),
 ];
 
 $template->view('layout', $data);

@@ -52,7 +52,7 @@ if (isset($main_category_id)) {
 
 $data = [
   'title' => 'Shop',
-  'slot' => $template->render('blocks/shop', ['category_data' => $category_data, 'product_data' => $product_data, "category_parent_data" => $category_parent, "brand_data" => $brand_data]),
+  'slot' => $template->render('shop', ['category_data' => $category_data, 'product_data' => $product_data, "category_parent_data" => $category_parent, "brand_data" => $brand_data]),
 ];
 
 $template->view('layout', $data);

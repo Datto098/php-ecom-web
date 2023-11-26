@@ -14,7 +14,7 @@ $template = new Template();
 
 $data = [
   'title' => 'Checkout',
-  'slot' => $template->render('blocks/checkout', ['category_data' => $category_data]),
+  'slot' => $template->render('checkout', ['category_data' => $category_data]),
 ];
 
 $template->view('layout', $data);
