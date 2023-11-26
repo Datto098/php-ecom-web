@@ -13,15 +13,10 @@ spl_autoload_register(function ($class) {
 //     $$key = $value;
 // }
 $template = new Template();
-$categoryModels = new Category();
-$categories = $categoryModels->getAllCategories();
 
 $data = [
-    'title' => 'Manage products',
-    'slot' => $template->render('add_product', ['categories'=> $categories]),
+    'title' => 'Edit',
+    'slot' => $template->render('edit_product', []),
   ];
   
   $template->view('layout_admin', $data);
-
-// header("Content-Type: application/json");
-// echo json_encode($product->getAllProducts());

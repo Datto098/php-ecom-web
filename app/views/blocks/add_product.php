@@ -9,7 +9,8 @@
         </div>
     </div>
 
-    <form method="post" enctype="multipart/form-data">
+    <div class="container">
+    <form action="store.php" method="post" enctype="multipart/form-data">
         <div class="row gap-3">
             <div class="col">
                 <div class="mb-3">
@@ -31,52 +32,29 @@
                 <div class="box_upload">
                     <label for="product_img">
                         <ion-icon name="cloud-upload-outline"></ion-icon>
-                        <span>
+                        <span class="py-3 px-3 rounded mt-3 d-inline-block" style="cursor: pointer; font-weight: bold; border: 1px solid #eee;">
                             Ảnh chi tiết của sản phẩm
                         </span>
                         <input name="product_image" type="file" accept="image/*" hidden id="product_img" />
                     </label>
                 </div>
             </div>
-
-            <div class="col">
-                <div class="mb-3">
-                    <label for="product_color" class="form-label">Màu sắc</label>
-                    <input type="text" class="form-control" id="product_color" name="product_color">
-                </div>
-                <div class="mb-3">
-                    <label for="product_size" class="form-label">Kích cỡ</label>
-                    <input type="text" class="form-control" id="product_size" name="product_size">
-                </div>
-                <div class="mb-3">
-                    <label for="product_quantity" class="form-label">Số lượng</label>
-                    <input type="number" class="form-control" id="product_quantity" name="product_quantity">
-                </div>
-
-                <div class="box_upload">
-                    <label for="product_details_img">
-                        <ion-icon name="cloud-upload-outline"></ion-icon>
-                        <span>
-                            Ảnh chi tiết của sản phẩm
-                        </span>
-                        <input name="product_details_img[]" type="file" id="product_details_img" multiple accept="image/*" hidden />
-                    </label>
-                </div>
-            </div>
         </div>
         <ul class="mt-3 row">
             <div class="d-flex category_menu_select">
-                <input type="text" name="category_id" class="input_category_id" hidden>
-                <?php
-                if (!empty($category_menu)) {
-                    echo $category_menu;
-                }
-                ?>
+            
+                <?php foreach($categories as $category) : ?>
+               <div class="category_item">
+                <label for=""><?php echo $category['category_name'] ?></label>
+                <input type="checkbox" value="<?php echo $category['id'] ?>">
+               </div>
+               <?php endforeach ?>
             </div>
         </ul>
 
         <button type="submit" class="btn btn-primary mt-3">Submit</button>
     </form>
+    </div>
 </div>
 
 <script>

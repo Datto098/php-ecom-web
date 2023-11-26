@@ -108,6 +108,46 @@
       return confirm("Confirm delete ?");
     }
 
+	const avata = document.querySelector('.avata');
+	const boxAdmin = document.querySelector('.box-admin');
+	// const btnUserAdd = document.querySelector('.btn-user-add');
+	// const userAdd = document.querySelector('.user-add');
+	
+	
+	
+	
+	let isVisible = false;
+	avata.addEventListener('click', () => {
+		if (isVisible) {
+			boxAdmin.classList.remove('d-block');
+			boxAdmin.classList.add('d-none');
+			isVisible = false;
+		} else {
+			boxAdmin.classList.remove('d-none');
+			boxAdmin.classList.add('d-block');
+			isVisible = true;
+		}
+	});
+	
+	
+	function deleteCommit() {
+		return confirm("Confirm delete ?");
+	}
+	
+	
+	// function clickButtonToOn() {
+	// 	userAdd.classList.add('d-block');
+	// 	userAdd.classList.remove('d-none');
+	// }
+	</script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+			crossorigin="anonymous">
+      </script>
+
+
+
 
     function clickButtonToOn() {
       userAdd.classList.add('d-block');

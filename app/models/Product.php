@@ -72,6 +72,12 @@ class Product extends Database
             $detailStmt = parent::$connection->prepare("SELECT * FROM product_details WHERE product_id = ?");
             $detailStmt->bind_param("i", $productId);
 
+        $sql = parent::$connection->prepare("select products.* ,
+        GROUP_CONCAT(product_details.product_color,'-',product_details.product_size,'-',product_details.product_quantity) as 'list_attributes', 
+        (select GROUP_CONCAT(product_images.id,'~',product_images.href_value) from product_images WHERE product_images.product_id = products.id) as 'images' from products
+        inner join product_details on product_details.product_id = products.id WHERE products.id = ?");
+        $sql->bind_param("i", $id); // it nhat la 2 tham so
+        return parent::select($sql)[0];
             $images = parent::select($imageStmt);
             $rates = parent::select($rateStmt);
             $details = parent::select($detailStmt);
@@ -82,6 +88,7 @@ class Product extends Database
         }
         return $product[0];
     }
+
 
     public static function getProductByCategoryId($categoryId)
     {
@@ -142,80 +149,27 @@ class Product extends Database
 
     public static function getAllProducts()
     {
-        $productStmt = parent::$connection->prepare("SELECT * FROM products");
-        $products = parent::select($productStmt);
+        $sql = parent::$connection->prepare("select * from products");
+        return parent::select($sql);
+    }
 
-        foreach ($products as $key => $product) {
-            if ($product) {
 
-                $rates = self::getProductRate($product["id"]);
-                $details = self::getProductDetail($product["id"]);
+    //insert product
+    public function addProduct($image,$desc,$brand,$name,$price,$category_id)
+    {
+        $sql = parent::$connection->prepare("INSERT INTO `products`(`product_img`, 
+        `product_desc`, `product_brand`, `product_name`, `product_price`, `category_id`) VALUES (?,?,?,?,?,?)");
+        $sql->bind_param("ssssii",$image,$desc,$brand,$name,$price,$category_id);
+        $insertedProduct = parent::$connection->insert_id;
 
-                foreach ($details as $index => $detail) {
-                    $imageStmt = parent::$connection->prepare("SELECT * FROM product_images WHERE product_id = ?");
-                    $imageStmt->bind_param("i", $detail["detail_id"]);
-                    $images = parent::select($imageStmt);
-                    $products[$key]["details"] = $detail;
-                    $products[$key]["details"]["product_detail_image"] = $images;
-                }
-
-                $products[$key]["rates"] = $rates[0];
-            }
+        if ($sql->execute())
+        {
+            return $insertedProduct;
         }
-        return $products;
+        return -1;
     }
 
-    public static function getProductDetail($productId)
-    {
-        $detailStmt = parent::$connection->prepare("SELECT * FROM product_details WHERE product_id = ?");
-        $detailStmt->bind_param("i", $productId);
-        return parent::select($detailStmt);
-    }
-
-    public static function addRate($productId, $rateValue)
-    {
-        return parent::insert("rates", array(
-            "product_id" => $productId,
-            "rate_value" => $rateValue
-        ));
-    }
-
-    public static function addProductDetail($productId, $productColor, $productSize, $productQuantity)
-    {
-        return parent::insert("product_details", array(
-            "product_id" => $productId,
-            "product_color" => $productColor,
-            "product_size" => $productSize,
-            "product_quantity" => $productQuantity,
-        ));
-    }
-
-    public static function getProductRate($productId)
-    {
-        $rateStmt = parent::$connection->prepare("SELECT AVG(rate_value) AS average_rate FROM rates WHERE product_id = ?");
-        $rateStmt->bind_param("i", $productId);
-        return parent::select($rateStmt);
-    }
-
-    public static function getAllProductBrands()
-    {
-        $brandStmt = parent::$connection->prepare("SELECT product_brand as brand_name FROM products GROUP BY product_brand");
-        return parent::select($brandStmt);
-    }
-
-    public static function getProductByPriceRange($minPrice, $maxPrice, $categoryId = null)
-    {
-        $products = array();
-        if ($categoryId != null) {
-            $productStmt = parent::$connection->prepare("SELECT * FROM products WHERE product_price >=? AND product_price <=? AND category_id = ?");
-            $productStmt->bind_param("iii", $minPrice, $maxPrice, $categoryId);
-            $products = parent::select($productStmt);
-        } else {
-            $productStmt = parent::$connection->prepare("SELECT * FROM products WHERE product_price >=? AND product_price <=?");
-            $productStmt->bind_param("ii", $minPrice, $maxPrice);
-            $products = parent::select($productStmt);
-        }
-
+    //insert product details and images
         foreach ($products as $key => $product) {
             if ($product) {
 
@@ -258,8 +212,5 @@ class Product extends Database
 
                 $products[$key]["rates"] = $rates[0];
             }
-        }
-
-        return $products;
-    }
+      }
 }

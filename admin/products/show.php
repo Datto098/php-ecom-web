@@ -10,11 +10,17 @@ spl_autoload_register(function ($class) {
 $conn = new Database();
 $template = new Template();
 $productModels = new Product();
-$products = $productModels->
+$id ;
+
+if (!empty($_GET['id']))
+{
+    $id = $_GET['id'];
+}
+$product = $productModels->getProductById($id);
 
 $data = [
-  'title' => 'details products',
-  'slot' => $template->render('details_product', []),
+  'title' => $product['product_name'],
+  'slot' => $template->render('details_product', ['product'=> $product]),
 ];
 
 $template->view('layout_admin', $data);

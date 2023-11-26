@@ -12,7 +12,7 @@ class Category extends Database
         }
     }
 
-    public static function getAllCategories()
+    public function getAllCategories()
     {
         $categoryStmt = parent::$connection->prepare("SELECT * FROM categories ORDER BY parent_id");
         $categories = parent::select($categoryStmt);
@@ -27,7 +27,6 @@ class Category extends Database
                 unset($categories[$key]);
             }
         }
-
         return $categories;
     }
 
