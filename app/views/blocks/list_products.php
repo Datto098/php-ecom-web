@@ -24,7 +24,7 @@
                                 </form>
                                 <div>
                                         <a class="button btn btn-user-add" style="background-color: #9055fd;"
-                                                onclick="clickButtonToOn()" href="create.php">Add
+                                                href="create.php">Add
                                                 Product</a>
                                 </div>
                         </div>
@@ -65,7 +65,7 @@
                                                         <a class="btn btn-primary me-3" href="edit.php?id=<?php echo $user['id'] ?>">Edit</a>
                                                         <a class="btn btn-danger me-3" href="destroy.php?id=<?php echo $user['id'] ?>"
                                                                 onclick="return deleteCommit();">Delete</a>
-                                                        <a class="btn btn-secondary me-3" href="show.php?id=<?php echo $user['id'] ?>"
+                                                        <a class="btn btn-secondary me-3" href="show.php?id=<?php echo $product['id'] ?>"
                                                                 >Details</a>
                                                 </div>
                                         </td>
