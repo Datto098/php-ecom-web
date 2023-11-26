@@ -12,28 +12,28 @@ class Category extends Database
         }
     }
 
-    // public function getAllCategories()
-    // {
-    //     $categoryStmt = parent::$connection->prepare("SELECT * FROM categories ORDER BY parent_id");
-    //     $categories = parent::select($categoryStmt);
+    public function getAllCategories()
+    {
+        $categoryStmt = parent::$connection->prepare("SELECT * FROM categories ORDER BY parent_id");
+        $categories = parent::select($categoryStmt);
 
-    //     foreach ($categories as $key => $category) {
-    //         $result = self::getChildCategories($categories, $category['id']);
-    //         $categories[$key]["child_category"] = $result;
-    //     }
+        foreach ($categories as $key => $category) {
+            $result = self::getChildCategories($categories, $category['id']);
+            $categories[$key]["child_category"] = $result;
+        }
 
-    //     foreach ($categories as $key => $category) {
-    //         if ($category["parent_id"]) {
-    //             unset($categories[$key]);
-    //         }
-    //     }
-    //     return $categories;
-    // }
-
-
-    public function getAllCategories() {
-        
+        foreach ($categories as $key => $category) {
+            if ($category["parent_id"]) {
+                unset($categories[$key]);
+            }
+        }
+        return $categories;
     }
+
+
+    // public function getAllCategories() {
+        
+    // }
 
 
 
