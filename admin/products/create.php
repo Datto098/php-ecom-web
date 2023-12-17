@@ -12,16 +12,18 @@ spl_autoload_register(function ($class) {
 // foreach ($$request as $key => $value) {
 //     $$key = $value;
 // }
+
 $template = new Template();
 $categoryModels = new Category();
-$categories = $categoryModels->getAllCategories();
-
+$parentCategories = $categoryModels->getParentCategoryId();
+$colorModels = new Colors();
+$colors = $colorModels->getAllColors();
+$sizeModelsModels = new SizeModels();
+$sizeModels = $sizeModelsModels->getAllSizeModels();
 $data = [
     'title' => 'Manage products',
-    'slot' => $template->render('add_product', ['categories'=> $categories]),
+    'slot' => $template->render('add_product', ['parentCategories'=> $parentCategories,'colors'=>$colors,'sizeModels'=>$sizeModels]),
   ];
   
   $template->view('layout_admin', $data);
 
-// header("Content-Type: application/json");
-// echo json_encode($product->getAllProducts());

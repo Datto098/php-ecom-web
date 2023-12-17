@@ -12,7 +12,6 @@ $email;
 $password;
 $fullname;
 $role;
-
 if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['fullname']) && isset($_POST['role']))
 {
     $username = $_POST['username'];
@@ -20,9 +19,8 @@ if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['passwor
     $password = $_POST['password'];
     $fullname = $_POST['fullname'];
     $role = $_POST['role'];
-
     $userModels = new User();
-    $userModels->store($username,$email,$password,$fullname, $role);
+    $userModels->store($username,$email,$password,$fullname,$role);
     
 }
 

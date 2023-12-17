@@ -1,26 +1,6 @@
 <div class="container mt-5">
     <div class="row">
-        <div class="col-4">
-
-            <div class="border-box-radius mt-5">
-                <img class="w-100 mb-5 rounded" style=""
-                    src="https://goode.vn/images/stories/virtuemart/product/quan-ao-bong-da.jpg" alt="">
-            </div>
-
-
-            <div class="line"></div>
-            <button class="btn btn-primary">Edit details</button>
-        </div>
-
-
-
-
-        <div class="col-8">
-
-
-            <div class="images w-75 d-flex px-3">
-
-                <div class="details">
+                <div class="col-4">
                     <h5 class="name my-4 text-center">
                         <?php echo $product['product_name'] ?>
                     </h5>
@@ -43,57 +23,58 @@
                         </div>
                         <div class="category_id">
                             <span class="fw-bold">Category : </span>
-                            <span>
-                                <?php echo $product['category_id'] ?>
-                            </span>
+                            <div class="categories-box">
+                            <?php $categories = explode(",",$product['categories']) ?>
+                            <?php foreach ($categories as $category): ?>
+                            <div class="option w-100 form-check" >
+                               <span class="d-block"><?php echo explode("-",$category)[1] ?></span>
+                            </div>
+                        <?php endforeach ?>
+                            </div>
                         </div>
                     </div>
 
 
                     <div class="line"></div>
-
-
-
-
-
-
                 </div>
 
+                <div class="col-8">
                 <div class="row mt-4">
                     <h5 class="title">Attributes</h5>
-                    <?php $list_attributes = explode(",", $product['list_attributes']);
-                    foreach ($list_attributes as $attributes):
-
+                    <?php if (isset($_SESSION['success'])) : ?>
+                    <div class="alert alert-success"> <?php echo $_SESSION['success']; unset($_SESSION['success']) ?></div>
+                    <?php endif ?>
+                    <?php
+                    foreach ($attributes as $attribute):
                         ?>
                         <div class="col-6">
                             <div class="attributes d-flex border-box-radius">
                                 <div class="color">
                                     <span class="fw-bold">Color : </span>
                                     <span>
-                                        <?php echo explode("-", $attributes)[0] ?>
+                                        <?php echo $attribute['product_color'] ?>
                                     </span>
                                 </div>
                                 <div class="size">
                                     <span class="fw-bold">Size : </span>
                                     <span>
-                                        <?php echo explode("-", $attributes)[1] ?>
+                                        <?php echo $attribute['product_size'] ?>
                                     </span>
                                 </div>
                                 <div class="quality">
-                                    <span class="fw-bold">Quality</span>
+                                    <span class="fw-bold">Quantily</span>
                                     <span>
-                                        <?php echo explode("-", $attributes)[2] ?>
+                                        <?php echo $attribute['product_quantity'] ?>
                                     </span>
                                 </div>
 
                                 <div class="row">
-
-                                    <?php $images = explode(",", $product['images']);
+                                    <?php $images = explode(",", $attribute['images']);
                                     foreach ($images as $image): ?>
                                         <div class="col-6 mb-5">
                                             <div class="image">
                                                 <img class="rounded img-fluid w-100" style="height: 100px; object-fit: cover;"
-                                                    src="<?php echo explode("~", $image)[1] ?>" alt="">
+                                                    src="../../public/img/products/<?php echo explode("~", $image)[1] ?>" alt="">
                                             </div>
 
                                         </div>
@@ -107,11 +88,12 @@
                     <?php endforeach ?>
 
                     <div class="col-6">
-                        <button class="btn btn-primary">Add</button>
+                        <form action="../attributes/create.php" method="post">
+                            <button type="submit" value="<?php echo $product['id'] ?>" name="product_id" class="btn btn-primary">Add</button>
+                        </form>
                     </div>
                 </div>
-            </div>
+                </div>
 
 
-        </div>
     </div>

@@ -1,56 +1,105 @@
-<?php 
+<?php
 require_once "../../config/database.php";
 require_once "../../config/baseurl.php";
 
 // Autoload 
 spl_autoload_register(function ($class) {
-    require_once BASE_URL .'app/models/' . $class . '.php';
-  });
+  require_once BASE_URL . 'app/models/' . $class . '.php';
+});
 
 
-
- //khai bao bien
-$image;
-$desc;
-$brand;
+//khai bao bien
 $name;
+$brand;
 $price;
-$category_id;
-$id;
-
-//
-
-if (isset($_POST['product_description']) && isset($_POST['product_brand']) && isset($_POST['product_name']) && isset($_POST['product_price']) 
-  && isset($_POST['category_id'])) {
-    $desc = $_POST['product_description'];
-    $brand = $_POST['product_brand'];
-    $name = $_POST['product_name'];
-    $price = $_POST['product_price'];
-    $category_id = $_POST['category_id'];
-    $image = $_FILES['product_image']['name'];
+$categoriesID;
+$colorsID;
+$sizesID;
+$quantities;
+$image;
+$galleries_image;
+$desc;
+$productModels = new Product();
 
 
-    //khoi tao doi tuong Product
-    $productModels = new Product();
+//prosessing
 
-    $id = $productModels->addProduct($image,$desc,$brand,$name,$price,$category_id);
+$name = (isset($_POST['name'])) ? $_POST['name'] : '';
+$brand = (isset($_POST['brand'])) ? $_POST['brand'] : '';
+$price = (isset($_POST['price'])) ? $_POST['price'] : 0;
 
-    // if ($id != -1)
-    // {
-    //     header("location: show.php?id={$id}");
-    // }
-
-    echo $id;
-}
-else {
-    echo "rong";
+if (isset($_POST['categoriesID'])) {
+  $categoriesID = $_POST['categoriesID'];
+} else {
+  $categoriesID = [];
 }
 
-// echo  $_POST['product_description'];
-// echo  $_POST['product_brand'];
-// echo  $_POST['product_name'];
-// echo  $_POST['product_price'];
-// echo  $_POST['category_id'];
-// echo  $_FILES['product_image']['name'];
+if (isset($_POST['colorsID'])) {
+  $colorsID = $_POST['colorsID'];
+} else {
+  $colorsID = [];
+}
+
+if (isset($_POST['sizesID'])) {
+  $sizesID = $_POST['sizesID'];
+} else {
+  $sizesID = [];
+}
+
+if (isset($_POST['quantities'])) {
+  $quantities = $_POST['quantities'];
+} else {
+  $quantities = [];
+}
+
+
+
+$image = isset($_FILES['image']) ? $_FILES['image'] : '';
+
+if (isset($_FILES['galleries'])) {
+  $galleries_image = $_FILES['galleries'];
+}
+
+$desc = (isset($_POST['desc'])) ? $_POST['desc'] : 0;
+
+
+
+
+// Đường dẫn thư mục uploads
+$uploadDirectory = BASE_URL . 'public/img/products/' . date('Y-m-d') . '/';
+// Tạo thư mục theo ngày nếu chưa tồn tại
+if (!file_exists($uploadDirectory)) {
+  mkdir($uploadDirectory, 0777, true);
+
+}
+
+move_uploaded_file($image['tmp_name'], $uploadDirectory . $image['name']);
+for ($i = 0; $i < count($galleries_image['tmp_name']); $i++) {
+  move_uploaded_file($galleries_image['tmp_name'][$i], $uploadDirectory . $galleries_image['name'][$i]);
+}
+
+
+if ($productModels->store($name, $brand, $price, $desc, $image['name'], $sizesID, $colorsID, $quantities, $galleries_image['name'], $categoriesID)) {
+  $_SESSION['notify'] = "Update product success";
+  $_SESSION["alert"] = "alert-success";
+} else {
+  $_SESSION['notify'] = "Update product fail";
+  $_SESSION["alert"] = "alert-danger";
+
+}
+
+header("location: index.php");
+
+
+
+
+
+
+
+
+
+
+
+
 
 

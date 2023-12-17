@@ -14,7 +14,7 @@ $users = $userModels->getAllUsers();
 
 $data = [
   'title' => 'Manage Ecom',
-  'slot' => $template->render('list_account', ["users"=>$users,]),
+  'slot' => $template->render('list_account', ["users"=>$users])
 ];
 
 $template->view('layout_admin', $data);

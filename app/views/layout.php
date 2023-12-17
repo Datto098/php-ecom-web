@@ -33,14 +33,14 @@ $category_data = $category->getAllCategories();
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
 
   <!-- Css Styles -->
-  <link rel="stylesheet" href="public/css/font-awesome.min.css" type="text/css" />
-  <link rel="stylesheet" href="public/css/bootstrap.min.css" type="text/css" />
-  <link rel="stylesheet" href="public/css/elegant-icons.css" type="text/css" />
-  <link rel="stylesheet" href="public/css/magnific-popup.css" type="text/css" />
-  <link rel="stylesheet" href="public/css/nice-select.css" type="text/css" />
-  <link rel="stylesheet" href="public/css/owl.carousel.min.css" type="text/css" />
-  <link rel="stylesheet" href="public/css/slicknav.min.css" type="text/css" />
-  <link rel="stylesheet" href="public/css/style.css" type="text/css" />
+  <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+  <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="css/elegant-icons.css" type="text/css" />
+  <link rel="stylesheet" href="css/magnific-popup.css" type="text/css" />
+  <link rel="stylesheet" href="css/nice-select.css" type="text/css" />
+  <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css" />
+  <link rel="stylesheet" href="css/slicknav.min.css" type="text/css" />
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -68,7 +68,7 @@ $category_data = $category->getAllCategories();
       </div>
     </div>
     <div class="offcanvas__nav__option">
-      <a href="#" class="search-switch"><img src="public/img/icon/search.png" alt="" /></a>
+      <a href="#" class="search-switch"><img src="img/icon/search.png" alt="" /></a>
       <a href="#"><img src="img/icon/heart.png" alt="" /></a>
       <a href="#"><img src="img/icon/cart.png" alt="" /> <span>0</span></a>
       <div class="price">$0.00</div>
@@ -114,7 +114,7 @@ $category_data = $category->getAllCategories();
       <div class="row">
         <div class="col-lg-3 col-md-3">
           <div class="header__logo">
-            <a href="./index.php"><img src="public/img/logo.png" alt="" /></a>
+            <a href="./index.php"><img src="img/logo.png" alt="" /></a>
           </div>
         </div>
         <div class="col-lg-6 col-md-6">
@@ -172,9 +172,9 @@ $category_data = $category->getAllCategories();
         </div>
         <div class="col-lg-3 col-md-3">
           <div class="header__nav__option">
-            <a href="#" class="search-switch"><img src="public/img/icon/search.png" alt="" /></a>
-            <a href="#"><img src="public/img/icon/heart.png" alt="" /></a>
-            <a href="#"><img src="public/img/icon/cart.png" alt="" /> <span>0</span></a>
+            <a href="#" class="search-switch"><img src="img/icon/search.png" alt="" /></a>
+            <a href="#"><img src="img/icon/heart.png" alt="" /></a>
+            <a href="#"><img src="img/icon/cart.png" alt="" /> <span>0</span></a>
             <div class="price">$0.00</div>
           </div>
         </div>
@@ -188,6 +188,7 @@ $category_data = $category->getAllCategories();
     echo $slot;
   }
   ?>
+
 
   <!-- Footer Section Begin -->
   <footer class="footer">
@@ -277,16 +278,16 @@ $category_data = $category->getAllCategories();
   </div>
   <!-- Search End -->
   <!-- Js Plugins -->
-  <script src="public/js/jquery-3.3.1.min.js"></script>
-  <script src="public/js/bootstrap.min.js"></script>
-  <script src="public/js/jquery.nice-select.min.js"></script>
-  <script src="public/js/jquery.nicescroll.min.js"></script>
-  <script src="public/js/jquery.magnific-popup.min.js"></script>
-  <script src="public/js/jquery.countdown.min.js"></script>
-  <script src="public/js/jquery.slicknav.js"></script>
-  <script src="public/js/mixitup.min.js"></script>
-  <script src="public/js/owl.carousel.min.js"></script>
-  <script src="public/js/main.js"></script>
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.nice-select.min.js"></script>
+  <script src="js/jquery.nicescroll.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/jquery.countdown.min.js"></script>
+  <script src="js/jquery.slicknav.js"></script>
+  <script src="js/mixitup.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/main.js"></script>
 </body>
 
 </html>

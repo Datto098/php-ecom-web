@@ -12,6 +12,9 @@ $template = new Template();
 $productModels = new Product();
 $products = $productModels->getAllProducts();
 
+// var_dump($products);
+
+
 $data = [
   'title' => 'Manage products',
   'slot' => $template->render('list_products', ["products"=>$products]),
