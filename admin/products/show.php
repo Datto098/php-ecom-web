@@ -17,10 +17,14 @@ if (!empty($_GET['id']))
     $id = $_GET['id'];
 }
 $product = $productModels->getProductById($id);
+$attributes = $productModels->getAttributesById($id);
 
+// echo "<pre>";
+//   print_r($attributes);
+// echo "</pre>";
 $data = [
   'title' => $product['product_name'],
-  'slot' => $template->render('details_product', ['product'=> $product]),
+  'slot' => $template->render('details_product', ['product'=> $product,'attributes'=>$attributes]),
 ];
 
 $template->view('layout_admin', $data);

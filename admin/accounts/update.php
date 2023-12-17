@@ -14,7 +14,7 @@ $password;
 $fullname;
 $role;
 
-if (!empty($_POST['id']))
+if (isset($_POST['id']))
 {
     $id = $_POST['id'];
 }
@@ -24,18 +24,21 @@ if (!empty($_POST['id']))
 $userModels = new User();
 $user = $userModels->getUserById($id);
 
+if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['fullname']) && isset($_POST['role_id']))
+{
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $fullname = $_POST['fullname'];
+    $role = $_POST['role_id'];
+    //prosessing update
+    if ($userModels->update($username,$email,$password,$fullname,$role,$id)){
+      header('location: index.php');
+    }
+}
 
-$username = (!empty($_POST['username'])) ? $_POST['username'] : $user['username'];
-$email = (!empty($_POST['email'])) ? $_POST['email'] : $user['email'];
-$password = (!empty($_POST['password'])) ? $_POST['password'] : $user['password'];
-$fullname = (!empty($_POST['fullname'])) ? $_POST['fullname'] : $user['fullname'];
-$role = (isset($_POST['role'])) ? $_POST['role'] : $user['role'];
 
 
 
-
-//prosessing update
-$userModels->update($username,$email,$password,$fullname,$role,$id);
-header('location: index.php');
 
 

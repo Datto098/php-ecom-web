@@ -50,6 +50,7 @@ class Category extends Database
 
 
 
+
     public static function getAmountProductInCategory($categoryId)
     {
         $categoryStmt = parent::$connection->prepare("SELECT COUNT(*) as amount_product FROM products WHERE id IN (SELECT id FROM categories WHERE parent_id IN (SELECT id FROM categories WHERE parent_id = ?))");

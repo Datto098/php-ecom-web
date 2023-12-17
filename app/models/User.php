@@ -38,25 +38,23 @@ class User extends Database
     //select on
     public function getAllUsers()
     {
-        $sql = parent::$connection->prepare("select * from users");
+        $sql = parent::$connection->prepare("select users.* from users inner join roles on users.role_id = roles.id");
         return parent::select($sql);
     }
 
     //destroy
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $sql = parent::$connection->prepare("delete from users where id=?");
-        $sql->bind_param("i", $id);
+        $sql->bind_param("i",$id); 
         return $sql->execute();
     }
 
     //store
-    public function store($username, $email, $password, $fullname, $role)
-    {
+    public function store($username,$email,$password,$fullname,$role_id) {     
 
         $password = password_hash($password, PASSWORD_DEFAULT);
-        $sql = parent::$connection->prepare("insert into users (username,email,password,fullname,role) values(?,?,?,?,?)");
-        $sql->bind_param("ssssi", $username, $email, $password, $fullname, $role);
+        $sql = parent::$connection->prepare("insert into users (username,email,password,fullname,role_id) values(?,?,?,?,?)");
+        $sql->bind_param("ssssi",$username,$email,$password,$fullname,$role_id);
         return $sql->execute();
     }
 
@@ -69,13 +67,20 @@ class User extends Database
         return parent::select($sql)[0];
     }
 
-
     //update
-    public function update($username, $email, $password, $fullname, $role, $id)
-    {
+    public function update($username,$email,$password,$fullname,$role_id,$id) {
         $password = password_hash($password, PASSWORD_DEFAULT);
-        $sql = parent::$connection->prepare("update users set username=?,email=?,password=?,fullname=?,role=? where id=?");
-        $sql->bind_param("ssssii", $username, $email, $password, $fullname, $role, $id);
+        $sql = parent::$connection->prepare("update users set username=?,email=?,password=?,fullname=?,role_id=? where id=?");
+        $sql->bind_param("ssssii",$username,$email,$password,$fullname,$role_id,$id);
         return $sql->execute();
     }
+
+
+    //get all role
+    public function getAllRoles(){
+        $sql = parent::$connection->prepare("select * from roles");
+        return parent::select($sql);
+    }
+
+    
 }

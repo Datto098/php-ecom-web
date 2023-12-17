@@ -1,90 +1,113 @@
-<div class="container">
-<div class="position-absolute py-5 px-3 bg-white"
-			style="">
-			<form action="update.php" method="post">
-				<div class="row">
-				
-					<div
-						class="mb-3 col-12 col-sm-6 form-password-toggle fv-plugins-icon-container">
-						<div class="input-group input-group-merge">
-							<div class="form-floating form-floating-outline">
-								<input value="<?php if (!empty($_GET['id'])) { echo $_GET['id'] ;} ?>" class="form-control" type="text" id="id"
-									name="id" placeholder="············"> <label
-									for="id">id</label>
-							</div>
-						</div>
-						<div
-							class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
-					</div>
-					
-					<div
-						class="mb-3 col-12 col-sm-6 form-password-toggle fv-plugins-icon-container">
-						<div class="input-group input-group-merge">
-							<div class="form-floating form-floating-outline">
-								<input value="" class="form-control" type="text" id="username"
-									name="username" placeholder="············"> <label
-									for="username">username</label>
-							</div>
-						</div>
-						<div
-							class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+<div class="container mt-4" style="display: flex; justify-content: center;">
+	<div class="main-content">
+		<form id="product-form" method="POST" action="update.php">
+		<div class="wrap-field">
+				 <input class="id" type="hidden" name="id" value="<?= $user['id']?>" />
+				<div class="clear-both"></div>
+				<p class="alert alert-username" style="display: none; color: red">Username da ton tai
+			</div>
+			<div class="wrap-field">
+				<label>Username</label> <input class="username" type="text" name="username" value="<?= $user['username']?>"  required/>
+				<div class="clear-both"></div>
+				<p class="alert alert-username" style="display: none; color: red">Username da ton tai
+			</div>
+			<div class="wrap-field">
+				<label>Fullname</label> <input type="text" name="fullname" value="<?= $user['fullname']?>" required/>
+				<div class="clear-both"></div>
+			</div>
+			<div class="wrap-field">
+				<label>Email</label>
+				<input type="email" name="email" class="email" value="<?= $user['email']?>" required/>
+
+				<div class="clear-both"></div>
+				<p class="alert alert-email" style="display: none; color: red">Email da duoc lien ket voi tai khoan khac
+				</p>
+			</div>
+
+			<div class="wrap-field">
+				<label>Password</label> <input value="<?= $user['password']?>" class="input-password" type="text" name="password" />
+				<div class="clear-both"></div>
+			</div>
+
+			<div class="wrap-field">
+				<label>Confirm Password</label> <input value="<?= $user['password']?>" class="input-cfpassword" type="text" />
+				<div class="clear-both"></div>
+				<p id="errorText" style="margin-left: 10px"></p>
+			</div>
+
+			<div class="wrap-field mt-4">
+				<label>Role </label>
+				<div class="d-flex flex-column box-role">
+					<?php foreach($roles as $role): ?>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="role_id" id="flexRadioDefault1" value="<?php echo $role['id'] ?>" <?php echo ($role['id'] == $user['role_id']) ? "checked" : ""?> required>
+						<label class="form-check-label" for=""><?php echo $role['name'] ?>
+						</label>
 					</div>
 
-					<div
-						class="mb-3 col-12 col-sm-6 form-password-toggle fv-plugins-icon-container">
-						<div class="input-group input-group-merge">
-							<div class="form-floating form-floating-outline">
-								<input value="" class="form-control" type="email" id="email"
-									name="email" placeholder="············"> <label
-									for="email">email</label>
-							</div>
-						</div>
-						<div
-							class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
-					</div>
-
-					<div
-						class="mb-3 col-12 col-sm-6 form-password-toggle fv-plugins-icon-container">
-						<div class="input-group input-group-merge">
-							<div class="form-floating form-floating-outline">
-								<input value="" class="form-control" type="password" id="password"
-									name="password" placeholder="············"> <label
-									for="password">password</label>
-							</div>
-						</div>
-						<div
-							class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
-					</div>
-
-					<div
-						class="mb-3 col-12 col-sm-6 form-password-toggle fv-plugins-icon-container">
-						<div class="input-group input-group-merge">
-							<div class="form-floating form-floating-outline">
-								<input value="" class="form-control" type="fullname" id="fullname"
-									name="fullname" placeholder="············"> <label
-									for="fullname">fullname</label>
-							</div>
-						</div>
-						<div
-							class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
-					</div>
-
-					<div class="d-flex">
-						<span style="margin-right : 10px ; font-weight: bold">Role</span>
-						<div class="d-flex" class="me-4">
-						<label for="admin" >Admin</label>
-						<input type="radio" id="admin" value="1" name="role">
-						</div>
-						<div class="me-4">
-						<label for="user" >User</label>
-						<input type="radio" id="user" value="0" name="role">
-						</div>
-					</div>
-					
-					
+					<?php endforeach ?>
 				</div>
-
-				<button type="submit" class="btn btn-primary">Update</button>
-			</form>
-		</div>
+				<div class="clear-both"></div>
+			</div>
+			<button class="btn btn-primary my-5 btnAdd" style="margin-left: 142px;">Update</button>
+		</form>
+		<div class="clear-both"></div>
+	</div>
 </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+	// Thêm event listener để kiểm tra khi người dùng nhập dữ liệu
+	const inputPw = document.querySelector('.input-password');
+	const inputUsername = document.querySelector('.username');
+	const inputCfPw = document.querySelector('.input-cfpassword');
+  	const errorText = document.getElementById("errorText");
+	const errorUsername = document.querySelector(".alert-username");
+  	const btnAdd = document.querySelector(".btnAdd");
+  	inputPw.addEventListener("input", validatePassword);
+  	inputCfPw.addEventListener("input", validatePassword);
+	//xu ly password
+	function validatePassword(checkPw){
+	if(inputCfPw.value != "")
+	{
+		if (inputPw.value !== inputCfPw.value) {
+		    errorText.textContent = "Passwords do not match!";
+		    errorText.style.color = "red"
+		  	} else {
+		    // Passwords match, proceed with form submission or other actions
+		    errorText.textContent = "Passwords match!";
+		    errorText.style.color = "#00a67d";
+		  	}
+		}
+  	
+
+
+	}
+
+	const currentUsername = inputUsername.value;
+	inputUsername.addEventListener('input' , function(){
+		$.ajax({
+			url : "./check-username.php",
+			type : "POST",
+			data : {
+				username : inputUsername.value,
+				currentUsername : currentUsername,
+			},
+			success: function(data){
+				if (data)
+				{
+					errorUsername.style.display = "none"
+				}
+				else{
+					errorUsername.style.display = "block"
+				}
+
+				
+			},
+			error: function(xhr){
+				
+			}
+		});
+	});
+</script>

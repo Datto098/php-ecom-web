@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 25, 2023 at 11:51 AM
+-- Generation Time: Dec 17, 2023 at 09:27 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -139,6 +139,47 @@ INSERT INTO `categories` (`id`, `category_name`, `parent_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `category_product`
+--
+
+CREATE TABLE `category_product` (
+  `category_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `category_product`
+--
+
+INSERT INTO `category_product` (`category_id`, `product_id`) VALUES
+(1, 42),
+(2, 43);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `colors`
+--
+
+CREATE TABLE `colors` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `colors`
+--
+
+INSERT INTO `colors` (`id`, `name`) VALUES
+(4, 'Do'),
+(2, 'Hong'),
+(-1, 'Khong'),
+(3, 'Vang'),
+(1, 'Xanh');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `orders`
 --
 
@@ -173,21 +214,22 @@ CREATE TABLE `order_details` (
 
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
-  `product_img` text NOT NULL,
-  `product_desc` text NOT NULL,
-  `product_brand` varchar(255) NOT NULL,
-  `product_name` varchar(255) NOT NULL,
-  `product_price` double NOT NULL,
-  `category_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `name` varchar(200) NOT NULL,
+  `brand` varchar(100) DEFAULT NULL,
+  `price` int(11) NOT NULL,
+  `desc` text NOT NULL,
+  `image` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `product_img`, `product_desc`, `product_brand`, `product_name`, `product_price`, `category_id`) VALUES
-(17, '26a096a6a1cd164effeb6e7bcbe9e93f.jpg', 'Áo sơ mi croptop trẻ trung, năng động, thích hợp với nàng yêu thích sự cá tính.\r\n\r\nThiết kế áo dáng croptop với cổ đức cùng tay dài. \r\n\r\nÁo được tạo kiểu 2 lớp: 1 lớp cổ V bên trong và  1 lớp áo giả khoác bên ngoài. \r\n\r\nNàng có thể lựa chọn mix áo cùng chân váy, quần dài, quần short đều rất phù hợp. ', 'Ivymoda', 'ÁO SƠ MI CROPTOP', 1290000, 43),
-(18, '3dd38dc22de76b4bb376ce28cfd0fcfa.jpg', 'Sang trọng, thời thượng qua mẫu sơ mi lụa được Quý cô yêu thích từ nhà IVY moda. \r\n\r\nÁo cổ thuyền, dáng thường, thiết kế vai chờm độc đáo cùng điểm nhấn rút vai mới lạ. Để từ đó tạo bên tay lệch bắt mắt. \r\n\r\nCùng với đó, thiết kế lựa chọn chất liệu lụa mềm mại, mang đến cảm giác mặc nhẹ nhàng và vô cùng thoải mái. ', 'Ivymoda', 'ÁO LỤA CỔ THUYỀN', 890000, 43);
+INSERT INTO `products` (`id`, `name`, `brand`, `price`, `desc`, `image`, `created_at`, `updated_at`) VALUES
+(42, 'rrr', 'rrr', 1, '<p><strong>ok</strong></p>\r\n', '2023-12-17/Chính-Trị-Luận-1.jpg', '2023-12-17 06:34:24', '2023-12-17 00:34:44'),
+(43, 'test 2', 'vn', 1234, '', '2023-12-17/CP-4-600x530.jpg', '2023-12-17 06:36:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -198,18 +240,18 @@ INSERT INTO `products` (`id`, `product_img`, `product_desc`, `product_brand`, `p
 CREATE TABLE `product_details` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `product_color` varchar(50) NOT NULL,
-  `product_size` varchar(10) NOT NULL,
-  `product_quantity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `size_id` int(11) DEFAULT NULL,
+  `color_id` int(11) DEFAULT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_details`
 --
 
-INSERT INTO `product_details` (`id`, `product_id`, `product_color`, `product_size`, `product_quantity`) VALUES
-(25, 17, 'Trắng', 'M', 10),
-(26, 18, 'Vàng mustard', 'L', 10);
+INSERT INTO `product_details` (`id`, `product_id`, `size_id`, `color_id`, `quantity`) VALUES
+(241, 42, 3, -1, 200),
+(242, 43, 3, -1, 200);
 
 -- --------------------------------------------------------
 
@@ -221,31 +263,20 @@ CREATE TABLE `product_images` (
   `id` int(11) NOT NULL,
   `href_value` text NOT NULL,
   `product_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_images`
 --
 
 INSERT INTO `product_images` (`id`, `href_value`, `product_id`) VALUES
-(41, 'e2119c7d41f71513c83fc049fd360b02.jpg', 25),
-(42, 'e36f097765ca983eb9f0fef09930da51.jpg', 25),
-(43, 'd975e60753276755830ce5148b88a0bb.jpg', 25),
-(44, 'a08f06469ed908602a057220f6276a39.jpg', 25),
-(45, 'a7d33fe2ae98dc3ae820ad95d9667f31.jpg', 25),
-(46, '1049df0db495cbe33af760db03218831.jpg', 25),
-(47, '26a096a6a1cd164effeb6e7bcbe9e93f.jpg', 25),
-(48, '3dd38dc22de76b4bb376ce28cfd0fcfa (1).jpg', 26),
-(49, '45dcd6239d55b0c3663a39422d77a611.jpg', 26),
-(50, 'b159e2a61c6bd8423c5fa7c29225f2fe.jpg', 26),
-(51, 'a6528be04d16a3ee954d2ddeaf03d744.jpg', 26),
-(52, '99e07a9b3279837295b83734591233ac.jpg', 26),
-(53, 'af19db1a796fce1cfa55ec52d0a139e0.jpg', 26),
-(54, '51f813755233b002d8f4464b12771e32.jpg', 26),
-(55, 'https://lh6.googleusercontent.com/xr1tWQ0zigU8mFvMGfMmW2oiX9yinGbn8LaRLMHnPXvsh7Bg1ABs2Tk8ZfAoQMv6mPw9Id-iaSB1zuU5UTJmCcnTybFvdiaC-EHxrdTbRmNJT22y1tmSb5rE1--xKXg3TrmwO2z3', 17),
-(56, 'https://lh6.googleusercontent.com/xr1tWQ0zigU8mFvMGfMmW2oiX9yinGbn8LaRLMHnPXvsh7Bg1ABs2Tk8ZfAoQMv6mPw9Id-iaSB1zuU5UTJmCcnTybFvdiaC-EHxrdTbRmNJT22y1tmSb5rE1--xKXg3TrmwO2z3', 18),
-(57, 'https://mabustudio.com/?attachment_id=3204', 17),
-(58, 'https://mabustudio.com/?attachment_id=3204', 17);
+(330, '2023-12-03/details2.jpeg', 1),
+(331, '2023-12-03/details3.jpeg', 1),
+(332, '2023-12-03/users-image(1).jpeg', 1),
+(333, '2023-12-03/users-image(2).jpeg', 1),
+(560, '2023-12-17/G7-hoa-tan-den-15-goi.jpg', 42),
+(561, '2023-12-17/HinhRetail-15-600x600.jpg', 42),
+(562, '2023-12-17/espresso-600x600.png', 43);
 
 -- --------------------------------------------------------
 
@@ -258,6 +289,25 @@ CREATE TABLE `rates` (
   `rate_value` int(11) NOT NULL,
   `product_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`) VALUES
+(0, 'user'),
+(1, 'admin');
 
 -- --------------------------------------------------------
 
@@ -280,6 +330,48 @@ CREATE TABLE `shipping_addresses` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sizes`
+--
+
+CREATE TABLE `sizes` (
+  `id` int(11) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `size_models_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `sizes`
+--
+
+INSERT INTO `sizes` (`id`, `name`, `size_models_id`) VALUES
+(3, '38', 2),
+(4, '39', 2),
+(-1, 'Khong', NULL),
+(2, 'L', 1),
+(1, 'M', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `size_models`
+--
+
+CREATE TABLE `size_models` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `size_models`
+--
+
+INSERT INTO `size_models` (`id`, `name`) VALUES
+(2, 'Giay Dep'),
+(1, 'Quan Ao');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -289,17 +381,18 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `fullname` varchar(255) NOT NULL,
-  `role` int(11) NOT NULL DEFAULT 0
+  `role_id` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `fullname`, `role`) VALUES
-(5, 'admin', 'admin@gmail.com', '$2y$10$f0qAzSGAKrW6LfyFv7Gl9OF0qNCCxkC6EDmkJ.0SKJm7kVDk9oAZq', 'Nguyen Tien Dat', 1),
-(7, 'admin3', 'tannp.42.student@fit.tdc.edu.vn', '$2y$10$TEzQ/de3x5qGSvhEbyLpPOUvLcLXT2pZkWFIvyF4P5abGmubzXXBC', 'Nguyen Phuong Tan', 0),
-(9, 'B1HA6654', 'tannp.42.student@fit.tdc.edu.vn', '$2y$10$qQAH81EBhSri3y5xQiINLO4QC2mvYJk6HbpfPmVYMvnd5X8ZhcBGu', 'Nguyen Phuong Tan', 0);
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `fullname`, `role_id`) VALUES
+(12, 'admin', 'tan@gmail.com', '$2y$10$GkL.i491ZAX8OXFyrSNSb.rhV3nV7ZuoOozP28GwNSKfov.lbmRoq', 'Nguyen Phuong Tan', 1),
+(13, 'user', 'tan@gmail.com', '$2y$10$pq23X4jHloMOfZ7oNs4bzOY63gDsn52sEI/KlAK/CCYR0IcYLckvS', 'Tan Nguyen', 0),
+(17, 'test', 'tan@gmail.com', '$2y$10$b14BGIqLhMCJsysCRJEAr.j/PSIUke5Ql9ZJSZc8L8hMNZrqKvAMi', 'tan', NULL),
+(18, 'test', 'tan@gmail.com', '$2y$10$JiFLthbSp2.VbigSliIkbuTwp13oxGRTnkNiSqDZNt.5MD5iIHCHa', 'tan', 0);
 
 --
 -- Indexes for dumped tables
@@ -319,6 +412,19 @@ ALTER TABLE `cart`
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`),
   ADD KEY `category_ibfk_1` (`parent_id`);
+
+--
+-- Indexes for table `category_product`
+--
+ALTER TABLE `category_product`
+  ADD UNIQUE KEY `category_id` (`category_id`,`product_id`);
+
+--
+-- Indexes for table `colors`
+--
+ALTER TABLE `colors`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `orders`
@@ -346,19 +452,24 @@ ALTER TABLE `products`
 --
 ALTER TABLE `product_details`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `product_detail_ibfk_1` (`product_id`);
+  ADD UNIQUE KEY `product_id` (`product_id`,`size_id`,`color_id`);
 
 --
 -- Indexes for table `product_images`
 --
 ALTER TABLE `product_images`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `rates`
 --
 ALTER TABLE `rates`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -369,11 +480,27 @@ ALTER TABLE `shipping_addresses`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `sizes`
+--
+ALTER TABLE `sizes`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`),
+  ADD UNIQUE KEY `name_2` (`name`,`size_models_id`),
+  ADD UNIQUE KEY `name_3` (`name`,`size_models_id`),
+  ADD UNIQUE KEY `name_4` (`name`,`size_models_id`);
+
+--
+-- Indexes for table `size_models`
+--
+ALTER TABLE `size_models`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -392,6 +519,12 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
+-- AUTO_INCREMENT for table `colors`
+--
+ALTER TABLE `colors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
@@ -407,19 +540,19 @@ ALTER TABLE `order_details`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `product_details`
 --
 ALTER TABLE `product_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=243;
 
 --
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=563;
 
 --
 -- AUTO_INCREMENT for table `rates`
@@ -428,16 +561,34 @@ ALTER TABLE `rates`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `shipping_addresses`
 --
 ALTER TABLE `shipping_addresses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `sizes`
+--
+ALTER TABLE `sizes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `size_models`
+--
+ALTER TABLE `size_models`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
@@ -468,12 +619,6 @@ ALTER TABLE `orders`
 ALTER TABLE `order_details`
   ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
   ADD CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
-
---
--- Constraints for table `product_details`
---
-ALTER TABLE `product_details`
-  ADD CONSTRAINT `product_detail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
 --
 -- Constraints for table `shipping_addresses`
