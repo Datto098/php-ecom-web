@@ -9,8 +9,6 @@ class Product extends Database
     //get product by id
     public function getProductById($id)
     {
-
-
         $sql = parent::$connection->prepare("
         SELECT 
         products.*, 
@@ -166,21 +164,17 @@ class Product extends Database
     public function store($name, $brand, $price, $desc, $image, $sizesID, $colorsID, $quantities, $galleries_image, $categoriesID)
     {
         //insert products
-        $image = date('Y-m-d') . '/' . $image;
         $sql = parent::$connection->prepare("INSERT INTO `products`(`name`, `brand`, `price`, `desc`, `image`)
          VALUES (?,?,?,?,?)");
         $sql->bind_param("ssiss", $name, $brand, $price, $desc, $image);
         $sql->execute();
-
-
-
         //insert product_details
         $product_id = parent::$connection->insert_id;
 
         //insert categoriesID
-        //data
-        $insertedCategoriesProduct = [];
 
+       if (count($categoriesID) > 0 ){
+        $insertedCategoriesProduct = [];
         for ($i = 0; $i < count($categoriesID); $i++) {
             array_push($insertedCategoriesProduct, $categoriesID[$i], $product_id);
         }
@@ -190,33 +184,33 @@ class Product extends Database
         $sql = parent::$connection->prepare("INSERT INTO `category_product`(`category_id`, `product_id`) VALUES $values");
         $sql->bind_param($type, ...$insertedCategoriesProduct);
         $sql->execute();
-
-
+       }
 
 
         //insert details product
-        //data
-        $insertedDetails = [];
-        for ($i = 0; $i < count($sizesID); $i++) {
+       if (count($sizesID) > 0 )
+       {
+            $insertedDetails = [];
+            for ($i = 0; $i < count($sizesID); $i++) {
             array_push($insertedDetails, $product_id, $sizesID[$i], $colorsID[$i], $quantities[$i]);
-        }
+            }
 
-        $values = str_repeat("(?,?,?,?),", (count($sizesID) - 1)) . "(?,?,?,?)";
-        $type = str_repeat("iiii", count($sizesID));
+            $values = str_repeat("(?,?,?,?),", (count($sizesID) - 1)) . "(?,?,?,?)";
+            $type = str_repeat("iiii", count($sizesID));
 
-        $sql = parent::$connection->prepare("INSERT INTO `product_details`(`product_id`, `size_id`, `color_id`, `quantity`) 
-        VALUES $values ");
-        $sql->bind_param($type, ...$insertedDetails);
-        $sql->execute();
+            $sql = parent::$connection->prepare("INSERT INTO `product_details`(`product_id`, `size_id`, `color_id`, `quantity`) 
+            VALUES $values ");
+            $sql->bind_param($type, ...$insertedDetails);
+            $sql->execute();
+       }
 
 
 
         //insert product_images
         $insertedImages = [];
         for ($i = 0; $i < count($galleries_image); $i++) {
-            array_push($insertedImages, ($galleries_image[$i] != null ? date('Y-m-d') . '/' . $galleries_image[$i] : ''), $product_id);
+            array_push($insertedImages, ($galleries_image[$i] != null ? $galleries_image[$i] : ''), $product_id);
         }
-
         $values = str_repeat("(?,?),", (count($galleries_image) - 1)) . "(?,?)";
         $type = str_repeat("si", count($galleries_image));
         $sql = parent::$connection->prepare("INSERT INTO `product_images`(`href_value`, `product_id`)
@@ -251,6 +245,13 @@ class Product extends Database
         $sql = parent::$connection->prepare("DELETE FROM products WHERE id = ?");
         $sql->bind_param("i", $id);
         return $sql->execute();
+    }
+
+
+    public function deleteImageByName($name,$product_id){
+        $sql = parent::$connection->prepare("DELETE FROM product_images WHERE product_id = ? and href_value = ?");
+        $sql->bind_param("is", $product_id, $name);
+        $sql->execute();
     }
 
 

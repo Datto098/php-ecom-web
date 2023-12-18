@@ -70,7 +70,7 @@
 							<td class="py-2"><?= $product['id'] ?></td>
 							<td class="py-2">
 								<div>
-									<img  style="width: 70px;height: 70px; object-fit: cover" alt="" src="../../public/img/products/<?= $product['image'] ?>">
+									<img  style="width: 70px;height: 70px; object-fit: cover" alt="" src="../../public/storage/<?= $product['image'] ?>">
 								</div>
 							</td>
 							<td class="py-2"><?= $product['name'] ?></td>

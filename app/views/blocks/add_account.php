@@ -2,8 +2,9 @@
 	<div class="main-content">
 		<form id="product-form" method="POST" action="store.php">
 			<div class="wrap-field">
-				<label>Username</label> <input type="text" name="username" value=""  required/>
+				<label>Username</label> <input class="username" type="text" name="username" value=""  required/>
 				<div class="clear-both"></div>
+				<p class="alert alert-username" style="display: none; color: red">Username da ton tai
 			</div>
 			<div class="wrap-field">
 				<label>Fullname</label> <input type="text" name="fullname" value="" required/>
@@ -50,16 +51,18 @@
 </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
 
-	// Thêm event listener để kiểm tra khi người dùng nhập dữ liệu
 	const inputPw = document.querySelector('.input-password');
 	const inputCfPw = document.querySelector('.input-cfpassword');
   	const errorText = document.getElementById("errorText");
+	const inputUsername = document.querySelector('.username');
   	const btnAdd = document.querySelector(".btnAdd");
+	const errorUsername = document.querySelector(".alert-username");
+
   	inputPw.addEventListener("input", validatePassword);
   	inputCfPw.addEventListener("input", validatePassword);
-	//xu ly password
 	function validatePassword(checkPw){
 	if(inputCfPw.value != "")
 	{
@@ -72,8 +75,45 @@
 		    errorText.style.color = "#00a67d";
 		  	}
 		}
-	else{
-	}
+
   	
 	}
+
+	const currentUsername = inputUsername.value;
+	inputUsername.addEventListener('input' , function(){
+		$.ajax({
+			url : "./check-username.php",
+			type : "POST",
+			data : {
+				username : inputUsername.value,
+				currentUsername : currentUsername,
+			},
+			success: function(data){
+				if (data)
+				{
+					errorUsername.style.display = "none"
+				}
+				else{
+					errorUsername.style.display = "block"
+				}
+
+				
+			},
+			error: function(xhr){
+				
+			}
+		});
+	});
+
+	btnAdd.addEventListener('click', function() {
+    const errorTextColor = errorText.style.color;
+    const errorTextUsername = errorUsername.style.display;
+    console.log(errorTextColor)
+    console.log(errorTextUsername)
+    if (errorTextColor === "red" || errorTextUsername === "block") {
+        alert("Thong tin khong hop le")
+        event.preventDefault();
+    }
+
+	});
 </script>

@@ -58,7 +58,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
-	// Thêm event listener để kiểm tra khi người dùng nhập dữ liệu
 	const inputPw = document.querySelector('.input-password');
 	const inputUsername = document.querySelector('.username');
 	const inputCfPw = document.querySelector('.input-cfpassword');
@@ -67,7 +66,6 @@
   	const btnAdd = document.querySelector(".btnAdd");
   	inputPw.addEventListener("input", validatePassword);
   	inputCfPw.addEventListener("input", validatePassword);
-	//xu ly password
 	function validatePassword(checkPw){
 	if(inputCfPw.value != "")
 	{
@@ -75,14 +73,10 @@
 		    errorText.textContent = "Passwords do not match!";
 		    errorText.style.color = "red"
 		  	} else {
-		    // Passwords match, proceed with form submission or other actions
 		    errorText.textContent = "Passwords match!";
 		    errorText.style.color = "#00a67d";
 		  	}
 		}
-  	
-
-
 	}
 
 	const currentUsername = inputUsername.value;
@@ -102,12 +96,21 @@
 				else{
 					errorUsername.style.display = "block"
 				}
-
-				
 			},
 			error: function(xhr){
-				
 			}
 		});
+	});
+
+	btnAdd.addEventListener('click', function() {
+    const errorTextColor = errorText.style.color;
+    const errorTextUsername = errorUsername.style.display;
+    console.log(errorTextColor)
+    console.log(errorTextUsername)
+    if (errorTextColor === "red" || errorTextUsername === "block") {
+        alert("Thong tin khong hop le")
+        event.preventDefault();
+    }
+
 	});
 </script>

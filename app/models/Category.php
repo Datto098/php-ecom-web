@@ -153,4 +153,11 @@ class Category extends Database
         $categoryStmt->bind_param("i", $categoryId);
         return parent::select($categoryStmt);
     }
+
+    public static function getChildByParentCategory($parent_id)
+    {
+        $categoryStmt = parent::$connection->prepare("SELECT * FROM categories WHERE parent_id = ?");
+        $categoryStmt->bind_param("i", $parent_id);
+        return parent::select($categoryStmt);
+    }
 }

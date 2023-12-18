@@ -22,12 +22,9 @@ $desc;
 $productModels = new Product();
 
 
-//prosessing
-
 $name = (isset($_POST['name'])) ? $_POST['name'] : '';
 $brand = (isset($_POST['brand'])) ? $_POST['brand'] : '';
 $price = (isset($_POST['price'])) ? $_POST['price'] : 0;
-
 if (isset($_POST['categoriesID'])) {
   $categoriesID = $_POST['categoriesID'];
 } else {
@@ -53,41 +50,26 @@ if (isset($_POST['quantities'])) {
 }
 
 
-
 $image = isset($_FILES['image']) ? $_FILES['image'] : '';
-
 if (isset($_FILES['galleries'])) {
   $galleries_image = $_FILES['galleries'];
 }
-
 $desc = (isset($_POST['desc'])) ? $_POST['desc'] : 0;
+$uploadDirectory = BASE_URL . 'public/storage/';
 
-
-
-
-// Đường dẫn thư mục uploads
-$uploadDirectory = BASE_URL . 'public/img/products/' . date('Y-m-d') . '/';
-// Tạo thư mục theo ngày nếu chưa tồn tại
-if (!file_exists($uploadDirectory)) {
-  mkdir($uploadDirectory, 0777, true);
-
+$array = explode('.', $image['name']);
+$imageNameNw = hash('md5', $image['name']). '.' . end($array);
+$galleriesNameNw = [];
+foreach ($galleries_image['name'] as $item) {
+  $array = explode('.', $item);
+  $galleriesNameNw[] = hash('md5', $item). '.' . end($array);
 }
 
-move_uploaded_file($image['tmp_name'], $uploadDirectory . $image['name']);
+rename($image['tmp_name'], $uploadDirectory . $imageNameNw);
 for ($i = 0; $i < count($galleries_image['tmp_name']); $i++) {
-  move_uploaded_file($galleries_image['tmp_name'][$i], $uploadDirectory . $galleries_image['name'][$i]);
+  rename($galleries_image['tmp_name'][$i], $uploadDirectory . $galleriesNameNw[$i]);
 }
-
-
-if ($productModels->store($name, $brand, $price, $desc, $image['name'], $sizesID, $colorsID, $quantities, $galleries_image['name'], $categoriesID)) {
-  $_SESSION['notify'] = "Update product success";
-  $_SESSION["alert"] = "alert-success";
-} else {
-  $_SESSION['notify'] = "Update product fail";
-  $_SESSION["alert"] = "alert-danger";
-
-}
-
+$productModels->store($name, $brand, $price, $desc, $imageNameNw, $sizesID, $colorsID, $quantities, $galleriesNameNw, $categoriesID);
 header("location: index.php");
 
 

@@ -7,16 +7,13 @@ spl_autoload_register(function ($class) {
   require_once BASE_URL .'app/models/' . $class . '.php';
 });
 
-$conn = new Database();
-$template = new Template();
 $category = new Category();
 
 
 $category_child = array();
 if (isset($_GET["id"])) {
-    $category_child = $category->getChildCategories($_GET["id"]);
+    $category_child = $category->getChildByParentCategory($_GET["id"]);
 }
-
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');

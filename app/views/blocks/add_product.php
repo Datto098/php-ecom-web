@@ -5,7 +5,7 @@
             <div class="clear-both"></div>
             <div class="wrap-field">
                 <label>Name</label>
-                <input type="text" name="name" />
+                <input type="text" name="name" required/>
                 <div class="clear-both"></div>
             </div>
             <div class="wrap-field">
@@ -15,7 +15,7 @@
             </div>
             <div class="wrap-field">
                 <label>Price</label>
-                <input type="text" name="price"
+                <input type="text" name="price" required
                     value="<?= (!empty($product) ? number_format($product['price'], 0, ",", ".") : "") ?>" />
                 <div class="clear-both"></div>
             </div>
@@ -34,15 +34,13 @@
                                         <?php echo $parentCategory['category_name'] ?>
                                     </label>
                                     <input class="input-category-id-parent form-check-input" name="categoriesID[]"
-                                        type="checkbox" value="<?php echo $parentCategory['id'] ?>">
+                                        type="radio" value="<?php echo $parentCategory['id'] ?>">
                                 </div>
                             <?php endforeach ?>
                         </div>
                         </div>
                     </div>
                 </div>
-
-
                 <div class="clear-both"></div>
             </div>
 
@@ -51,8 +49,7 @@
                 <label>Details</label>
                 <div class="row">
 
-
-                    <!-- MOdels size -->
+                    <!-- Models size -->
                     <div class="col-3">
                         <div class="dropdown-model-size">
                             <div class="dropdown">
@@ -73,24 +70,7 @@
                                                         name="modelSize">
                                                 </div>
                                             <?php endforeach ?>
-
-
-                                            <div class="form-add-size-models mt-4 pt-4" style="border: 1px solid #eee;">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <input type="text" name="size-model-name"
-                                                            placeholder="Name size model" class="input-size-model-name">
-                                                    </div>
-                                                    <div class="col">
-                                                        <span
-                                                            class=" px-2 py-2 bg-dark rounded text-white btn-size-model-name"
-                                                            style="cursor: pointer;">Them
-                                                            moi</span>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
+                                           
                                         </div>
 
                                     </div>
@@ -192,10 +172,10 @@
             <div class="wrap-field">
                 <label>Image main : </label>
                 <div class="right-wrap-field">
-                    <img class="imageMain"
+                    <img class="imageMain" 
                         src="https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg" /><br />
                     <!-- <input type="hidden" name="image" /> -->
-                    <input type="file" name="image" class="input-image" />
+                    <input type="file" name="image" class="input-image" required/>
                 </div>
 
                 <div class="clear-both"></div>
@@ -231,15 +211,11 @@
     </div>
 </div>
 </div>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
-
-
-
 
     //delete item details
     const listDeleteDetails =document.querySelectorAll('.logo-delete');
-    console.log(listDeleteDetails)
 
     //check image
 
@@ -264,7 +240,6 @@
             }
         }
     })
-
 
 
     let notifyNameInvalid = '';
@@ -398,10 +373,22 @@
     inputCategoryId.forEach(input => {
         input.addEventListener("change", () => {
             const categoryId = input.value;
-            fetchData("./get-category-child.php?id=" + categoryId, "GET").then(data => {
+            console.log(categoryId)
+            $.ajax({
+			url : "./get-category-child.php",
+			type : "GET",
+			data : {
+				id : categoryId,
+			},
+			success: function(data){
+                console.log(data)
                 const dataBox = createDataBox(data);
                 select.appendChild(dataBox);
-            })
+			},
+			error: function(xhr){
+				
+			}
+		});
         })
     });
 
@@ -551,7 +538,7 @@
                                             <div class="col-4">
                                                 <div class="input-item w-100">
                                                     <label for="">Quantity</label>
-                                                    <input type="text" class="w-100" name="quantities[]" value="${element.quantity}">
+                                                    <input type="text" class="w-100" name="quantities[]" value="${element.quantity}" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -596,7 +583,7 @@
                                             <div class="col-4">
                                                 <div class="input-item w-100">
                                                     <label for="">Quantity</label>
-                                                    <input type="text" class="w-100" name="quantities[]" value="${element.quantity}">
+                                                    <input type="text" class="w-100" name="quantities[]" value="${element.quantity}" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -639,7 +626,7 @@
                                             <div class="col-4">
                                                 <div class="input-item w-100">
                                                     <label for="">Quantity</label>
-                                                    <input type="text" class="w-100" name="quantities[]" value="${element.quantity}">
+                                                    <input type="text" class="w-100" name="quantities[]" value="${element.quantity}" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -679,7 +666,7 @@
                                             <div class="col-4">
                                                 <div class="input-item w-100">
                                                     <label for="">Quantity</label>
-                                                    <input type="text" class="w-100" name="quantities[]" value="${element.quantity}">
+                                                    <input type="text" class="w-100" name="quantities[]" value="${element.quantity}" required>
                                                 </div>
                                             </div>
                                         </div>

@@ -19,7 +19,6 @@ $quantities;
 $image;
 $galleries_image;
 $images;
-$imagesOld;
 $desc;
 $productModels = new Product();
 
@@ -34,9 +33,6 @@ if (isset($_POST['id'])) {
     $categoriesID = $_POST['categoriesID'];
   } else {
     $categoriesID = explode(',',$product['categoriesID']);
-    // echo "<pre>";
-    // print_r($categoriesID);
-    // echo "</pre>";
   }
 
   if (isset($_POST['colorsID'])) {
@@ -72,83 +68,47 @@ if (isset($_POST['id'])) {
 
 
 
-  //XU LY FILE
 
-  // Đường dẫn thư mục uploads
-  $uploadDirectory = BASE_URL . 'public/img/products/';
-  //dua mang name anh ve chung 1 mang
-  $nameFolder = explode('/', $product['image'])[0] . '/';
-  //xoa file
-  $nameFile = $product['image'];
+  $uploadDirectory = BASE_URL . 'public/storage/';
   $newArrayNameImage = [];
-  //
-  $imagesOld = explode("~", $product['galleries_image']);
-
   if (isset($_POST['images'])) {
     $images = $_POST['images'];
   } else {
     $images = [];
   }
 
-  $image = isset($_FILES['image']) ? $_FILES['image'] : $product['image'];
-
-
-  // echo 'check  :'  . !empty($_FILES["image"]);
-
-  //main image khi co thay doi
-  if (!empty($_FILES['image']['name'][0])) {
-    $link = $uploadDirectory . $nameFile;
-    if (unlink($link)) {
-      //xoa image cu khoi folder
-      move_uploaded_file($image['tmp_name'], $uploadDirectory . $nameFolder . $image['name']); // them anh moi vua cap nhat vao folder
-      $nameFile = $nameFolder . $image['name'];
-    }
+ 
+  $imageNameNw;
+  if (!empty($_FILES['image']['name'][0]))
+  {
+    $image = $_FILES['image'];
+    $array = explode('.', $image['name']);
+    $imageNameNw = hash('md5', $image['name']). '.' . end($array);
+    unlink($uploadDirectory . $product['image']);
+    rename($image['tmp_name'], $uploadDirectory . $imageNameNw);
+  }
+  else {
+    $imageNameNw = $product['image'];
   }
 
-
-
-
-
-
-  foreach ($imagesOld as $image) {
-    if (!in_array($image,$images)){
-      $link = $uploadDirectory . $image;
-      echo $link;
-      if (file_exists($link)) {
-        unlink($link);
-      }
-    }
-  }
 
   // galleries image
-  if (!empty($galleries_image)) {
-
-    // //them file product images
+  if (!empty($galleries_image)){
+    $galleriesNameNw = [];
+    foreach ($galleries_image['name'] as $item) {
+    $array = explode('.', $item);
+    $galleriesNameNw[] = hash('md5', $item). '.' . end($array);
+    }
     for ($i = 0; $i < count($galleries_image['tmp_name']); $i++) {
-      move_uploaded_file($galleries_image['tmp_name'][$i], $uploadDirectory . $nameFolder . $galleries_image['name'][$i]);
+      rename($galleries_image['tmp_name'][$i], $uploadDirectory . $galleriesNameNw[$i]);
     }
-    foreach ($galleries_image['name'] as $gallery_image) {
-      array_push($newArrayNameImage, ($nameFolder . $gallery_image));
+    foreach ($galleriesNameNw as $gallery_image){
+      array_push($newArrayNameImage,$gallery_image);
     }
-
   }
-
 $newArrayNameImage = array_merge($newArrayNameImage,$images);
-
-//   //day du lieu ve lai db
-if ($productModels->update($name, $brand, $price, $desc, $nameFile,$newArrayNameImage,$sizesID,$colorsID,$quantities,$categoriesID,$id))
-{
-  $_SESSION['notify'] = "Update product success";
-  $_SESSION["alert"] = "alert-success";
-}
-else{
-  $_SESSION['notify'] = "Update product fail";
-  $_SESSION["alert"] = "alert-danger";
-  
-}
+$productModels->update($name, $brand, $price, $desc, $imageNameNw,$newArrayNameImage,$sizesID,$colorsID,$quantities,$categoriesID,$id);
 header("location: index.php");
-
-
 } 
 
 

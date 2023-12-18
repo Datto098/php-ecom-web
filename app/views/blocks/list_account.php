@@ -1,7 +1,6 @@
-<div class="alert  <?= (isset($_SESSION['alert'])) ? $_SESSION['alert'] : "" ?>">
-	<?= (isset($_SESSION['notify'])) ? $_SESSION['notify'] : "";
-	unset($_SESSION["notify"]);
-	unset($_SESSION["alert"]);
+<div class="alert  <?= (isset($_SESSION['success'])) ? " alert-success" : "" ?>">
+	<?= (isset($_SESSION['success'])) ? $_SESSION['success'] : "";
+	unset($_SESSION["success"]);
 	?>
 </div>
 <div class="container-fluid">
@@ -45,7 +44,6 @@
 				<th>email</th>
 				<th>password</th>
 				<th>role</th>
-
 			</thead>
 			<tbody>
 				<?php
@@ -78,7 +76,6 @@
 						</td>
 					</tr>
 				<?php endforeach ?>
-
 			</tbody>
 		</table>
 	</div>

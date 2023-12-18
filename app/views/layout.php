@@ -6,12 +6,9 @@ spl_autoload_register(function ($class) {
   require_once './app/models/' . $class . '.php';
 });
 
-$conn = new Database();
 $category = new Category();
 $category_data = $category->getAllCategories();
-
 ?>
-
 <!DOCTYPE html>
 <html lang="zxx">
 

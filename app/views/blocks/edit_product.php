@@ -4,7 +4,7 @@
             <input type="submit" title="Lưu sản phẩm" value="" />
             <div class="clear-both"></div>
             <div class="wrap-field">
-                <input type="hidden" name="id" value="<?=(isset($_GET['id']) ? $_GET['id'] : "") ?>" />
+                <input type="hidden" name="id" value="<?= (isset($_GET['id']) ? $_GET['id'] : "") ?>" />
                 <div class="clear-both"></div>
             </div>
             <div class="wrap-field">
@@ -19,13 +19,11 @@
             </div>
             <div class="wrap-field">
                 <label>Price</label>
-                <input type="text" name="price"
-                    value="<?= (!empty($product) ? $product['price'] : "") ?>" />
+                <input type="number" name="price" value="<?= (!empty($product) ? $product['price'] : "") ?>" />
                 <div class="clear-both"></div>
             </div>
             <div class="wrap-field">
                 <label>Categories</label>
-                
                 <div class="row ">
                     <div class="col-3">
                         <div class="box-select">
@@ -35,9 +33,11 @@
                                         <?php echo $parentCategory['category_name'] ?>
                                     </label>
                                     <input class="input-category-id-parent form-check-input" name="categoriesID[]"
-                                        type="checkbox" value="<?php echo $parentCategory['id'] ?>">
+                                        type="radio" value="<?php echo $parentCategory['id'] ?>">
                                 </div>
                             <?php endforeach ?>
+
+
                         </div>
                     </div>
 
@@ -67,7 +67,7 @@
                                     Models size
                                 </button>
                                 <ul class="dropdown-menu mt-3">
-                                    <div class="select-model-size d-flex justify-content-center flex-column">
+                                    <div class="select-model-size d-flex justify-content-center flex-column px-3">
                                         <div class="w-100">
                                             <?php foreach ($sizeModels as $sizeModel): ?>
                                                 <div class="model-size-item d-flex">
@@ -81,22 +81,6 @@
                                             <?php endforeach ?>
 
 
-                                            <div class="form-add-size-models mt-4 pt-4" style="border: 1px solid #eee;">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <input class="" type="text" name="size-model-name"
-                                                            placeholder="Name size model">
-                                                    </div>
-                                                    <div class="col">
-                                                        <span
-                                                            class="btn-add-size-models px-2 py-2 bg-dark rounded text-white"
-                                                            style="cursor: pointer;">Them
-                                                            moi</span>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
                                         </div>
 
                                     </div>
@@ -117,11 +101,9 @@
                                             Size
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <div class="select-model-size d-flex flex-column">
+                                            <div class="select-model-size d-flex flex-column px-3">
                                                 <div class="w-100 input-sizes">
-
                                                 </div>
-                                                <span style="cursor: pointer;">Them moi</span>
                                             </div>
                                         </ul>
                                     </div>
@@ -137,7 +119,7 @@
                                             Color
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <div class="select-model-size d-flex flex-column">
+                                            <div class="select-model-size d-flex flex-column px-3">
                                                 <div class="w-100">
                                                     <?php foreach ($colors as $color): ?>
                                                         <div class="model-size-item d-flex">
@@ -149,7 +131,6 @@
                                                         </div>
                                                     <?php endforeach ?>
                                                 </div>
-                                                <span>Them moi</span>
                                             </div>
                                         </ul>
                                     </div>
@@ -174,60 +155,60 @@
                             </div>
                             <div class="col details-list">
 
-                                
-                                <?php 
-                                if (!empty($product['product_details'])) : 
-                                $list_details = explode(';', $product['product_details']);
-                                foreach ($list_details as $item_details):
-                                    $item_detail = explode('~', $item_details);
-                                    ?>
-                                    <div class="row">
-                                        <div class="col-10">
-                                            <div class="row">
-                                                <div class="col-4 " style="margin-top: 21px;">
-                                                    <div class="input-item w-100">
-                                                        <label class="btn btn-secondary w-100" for="">
-                                                            <?= explode(":", $item_detail[0])[1]?>
-                                                        </label>
-                                                        <input type="hidden" class="w-100 sizes" name="sizesID[]"
-                                                            value="<?= explode(":", $item_detail[0])[0] ?>">
+
+                                <?php
+                                if (!empty($product['product_details'])):
+                                    $list_details = explode(';', $product['product_details']);
+                                    foreach ($list_details as $item_details):
+                                        $item_detail = explode('~', $item_details);
+                                        ?>
+                                        <div class="row">
+                                            <div class="col-10">
+                                                <div class="row">
+                                                    <div class="col-4 " style="margin-top: 21px;">
+                                                        <div class="input-item w-100">
+                                                            <label class="btn btn-secondary w-100" for="">
+                                                                <?= explode(":", $item_detail[0])[1] ?>
+                                                            </label>
+                                                            <input type="hidden" class="w-100 sizes" name="sizesID[]"
+                                                                value="<?= explode(":", $item_detail[0])[0] ?>">
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="col-4" style="margin-top: 21px;">
-                                                    <div class="input-item w-100">
-                                                        <label class="btn btn-secondary w-100" for="">
-                                                            <?= explode(":", $item_detail[1])[1] ?>
-                                                        </label>
-                                                        <input type="hidden" class="w-100 colors" name="colorsID[]"
-                                                            value="<?= explode(":", $item_detail[1])[0] ?>">
+                                                    <div class="col-4" style="margin-top: 21px;">
+                                                        <div class="input-item w-100">
+                                                            <label class="btn btn-secondary w-100" for="">
+                                                                <?= explode(":", $item_detail[1])[1] ?>
+                                                            </label>
+                                                            <input type="hidden" class="w-100 colors" name="colorsID[]"
+                                                                value="<?= explode(":", $item_detail[1])[0] ?>">
+                                                        </div>
                                                     </div>
-                                                </div>
 
 
-                                                <div class="col-4">
-                                                    <div class="input-item w-100">
-                                                        <label for="">Quantity</label>
-                                                        <input type="text" class="w-100 quantities" name="quantities[]"
-                                                            value="<?= $item_detail[2] ?>">
+                                                    <div class="col-4">
+                                                        <div class="input-item w-100">
+                                                            <label for="">Quantity</label>
+                                                            <input type="text" class="w-100 quantities" name="quantities[]"
+                                                                value="<?= $item_detail[2] ?>">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="col-2">
-                                            <div class="input-item w-100 d-flex mt-4">
-                                                <svg class="item_details-logo_del"
-                                                    style="width: 20px; color: red; cursor:pointer;"
-                                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                                </svg>
+                                            <div class="col-2">
+                                                <div class="input-item w-100 d-flex mt-4">
+                                                    <svg class="item_details-logo_del"
+                                                        style="width: 20px; color: red; cursor:pointer;"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                    </svg>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                <?php endforeach ?>
+                                    <?php endforeach ?>
 
                                 <?php endif ?>
                             </div>
@@ -254,11 +235,10 @@
                 <label>Image main : </label>
                 <div class="right-wrap-field">
                     <img class="imageMain"
-                        src="<?= '../../public/img/products/' . (!empty($product['image']) ? $product['image'] : "https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg") ?>" /><br />
-                    
-                    <input type="file" name="image" class="input-image"/>
-                </div>
+                        src="<?= '../../public/storage/' . (!empty($product['image']) ? $product['image'] : "https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg") ?>" /><br />
 
+                    <input type="file" name="image" class="input-image" />
+                </div>
                 <div class="clear-both"></div>
             </div>
             <div class="wrap-field">
@@ -266,20 +246,22 @@
                 <div class="right-wrap-field">
                     <div class="list-image">
                         <div class="row">
-                        <?php
-                        if (!empty($product['galleries_image'])) : 
-                        $galleries_image = explode('~',$product['galleries_image']);
-                        foreach ($galleries_image as $gallery_image):
-                        ?>
-                        <div class="item-image col-4 mb-3 position-relative">
-                            <input type="hidden" name="images[]" value="<?=$gallery_image?>"/>
-                            <img src="../../public/img/products/<?=$gallery_image?>" alt="">
-                            <button type="button" class="btn btn-danger item-image_del" style="position: absolute; bottom : 0; left : 0; z-index: 9">Delete</button>
-                        </div>
-                        <?php 
-                        endforeach 
-                        ?>
-                        <?php endif ?>
+                            <?php
+                            if (!empty($product['galleries_image'])):
+                                $galleries_image = explode('~', $product['galleries_image']);
+                                foreach ($galleries_image as $gallery_image):
+                                    ?>
+                                    <div class="item-image col-4 mb-3 position-relative">
+                                        <input type="hidden" name="images[]" value="<?= $gallery_image ?>" />
+                                        <img src="../../public/storage/<?= $gallery_image ?>" alt="">
+                                        <button value="<?=$product['id']?>" data-link="<?= BASE_URL . 'public/storage/' . $gallery_image ?>" type="button"
+                                            class="btn btn-danger item-image_del"
+                                            style="position: absolute; bottom : 0; left : 0; z-index: 9">Delete</button>
+                                    </div>
+                                <?php
+                                endforeach
+                                ?>
+                            <?php endif ?>
                         </div>
                     </div>
                     <!-- <input type="hidden" name="gallery_image[]" /> -->
@@ -307,6 +289,8 @@
 </div>
 </div>
 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
 
     //check image
@@ -335,12 +319,28 @@
 
 
     //delete item image
-    const listItemImgDetails =document.querySelectorAll('.item-image_del');
+    const listItemImgDetails = document.querySelectorAll('.item-image_del');
     listItemImgDetails.forEach(element => {
-        element.addEventListener('click', function(){
-            if (confirm("Confirm delete image ?"))
-            {
-                element.parentNode.remove();
+        element.addEventListener('click', function () {
+            if (confirm("Confirm delete image ?")) {
+                $.ajax({
+                    url: "./delete-image-product.php",
+                    type: "POST",
+                    data: {
+                        href: element.getAttribute('data-link'),
+                        product_id :element.value,
+                    },
+                    success: function (data) {
+                        if (data)
+                        {
+                            element.parentNode.remove();
+                        }
+                        console.log(data)
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
             }
         })
     });
@@ -349,7 +349,7 @@
 
     let notifyNameInvalid = '';
     let dem = 0;
-    const listImage =document.querySelector('.list-image > :first-child');
+    const listImage = document.querySelector('.list-image > :first-child');
     inputGalleries.forEach(function (inputGallery) {
         inputGallery.addEventListener('change', function (event) {
             const files = event.target.files; // Lấy danh sách các tệp tin được chọn
@@ -361,12 +361,15 @@
                     this.value = ""; // Xóa giá trị của input để xóa file không hợp lệ
                     dem++;
                 }
-                else{
+                else {
                     listImage.insertAdjacentHTML('beforeend',
-                    ` <div class="item-image col-4 mb-3 position-relative">
+                        ` <div class="item-image col-4 mb-3 position-relative">
                             <img src="${URL.createObjectURL(file)}" alt="">
+                            
                     </div>`
                     )
+                    
+
                 }
             }
         });
@@ -454,8 +457,6 @@
             })
         })
     });
-
-
 
     //data
     let listDetails = [];
